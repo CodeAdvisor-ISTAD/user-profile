@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BookmarkRepository extends MongoRepository<Bookmark, String> {
     boolean existsByUserIdAndForumIdOrContentId(Integer userId, Integer forumId, Integer contentId);
-    Optional<Bookmark> findByUserIdAndForumIdOrContentId(Integer userId, Integer forumId, Integer contentId);
+    Optional<Bookmark> findByForumIdOrContentId(Integer forumId, Integer contentId);
     Optional<Bookmark> findById(String id);
 
 }

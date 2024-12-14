@@ -24,8 +24,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest) {
         // Check if the bookmark already exists
-        Optional<Bookmark> existingBookmark = bookmarkRepository.findByUserIdAndForumIdOrContentId(
-                bookmarkAddRequest.userId(),
+        Optional<Bookmark> existingBookmark = bookmarkRepository.findByForumIdOrContentId(
                 bookmarkAddRequest.forumId(),
                 bookmarkAddRequest.contentId()
         );
