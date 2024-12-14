@@ -16,4 +16,6 @@ public class Bookmark {
     private Integer contentId; // Unique identifier for the content
     private LocalDateTime bookmarkedAt; // Timestamp when the content was bookmarked
     private Boolean isDeleted;
+
+
 }

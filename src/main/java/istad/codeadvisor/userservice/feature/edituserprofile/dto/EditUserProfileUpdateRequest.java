@@ -10,8 +10,8 @@ public record EditUserProfileUpdateRequest (
         String familyName,
         @NotBlank(message = "Last name is required")
         String givenName,
-        @NotBlank(message = "Username is required")
-        String username,
+//        @NotBlank(message = "Username is required")
+//        String username,
         @Size(max = 6, message = "Gender must not exceed 6 characters")
         String gender,
         @Size(max = 500, message = "Bio must not exceed 500 characters")

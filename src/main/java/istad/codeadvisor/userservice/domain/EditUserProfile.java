@@ -20,7 +20,6 @@ public class EditUserProfile {
     private String pob;
     private String school;
     private String jobPosition;
-    private String phone;
     private String dob;
     private String profileImage;         //  user's profile picture.
     private Boolean isDeleted;

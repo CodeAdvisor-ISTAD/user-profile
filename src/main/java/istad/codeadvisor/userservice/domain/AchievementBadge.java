@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @Document(collection = "achievement_badges")
 public class AchievementBadge {
     @Id
