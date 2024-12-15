@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface BookmarkRepository extends MongoRepository<Bookmark, String> {
-    boolean existsByUserIdAndForumIdOrContentId(Integer userId, Integer forumId, Integer contentId);
-    Optional<Bookmark> findByForumIdOrContentId(Integer forumId, Integer contentId);
+//    boolean existsByUserIdAndForumIdOrContentId(Integer userId, Integer forumId, Integer contentId);
+    Optional<Bookmark> findByUserIdAndForumIdAndContentId(Integer userId, Integer forumId, Integer contentId);
     Optional<Bookmark> findById(String id);
 
 }

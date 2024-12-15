@@ -23,24 +23,26 @@ public class BookmarkServiceImpl implements BookmarkService {
     // Add a forum or content to the bookmark
     @Override
     public BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest) {
-        // Check if the bookmark already exists
-        Optional<Bookmark> existingBookmark = bookmarkRepository.findByForumIdOrContentId(
+        // Check if the user has already bookmarked the same forum or content
+        Optional<Bookmark> existingBookmark = bookmarkRepository.findByUserIdAndForumIdAndContentId(
+                bookmarkAddRequest.userId(),
                 bookmarkAddRequest.forumId(),
                 bookmarkAddRequest.contentId()
         );
+
         if (existingBookmark.isPresent()) {
-            // Toggle the isDeleted status if the bookmark exists
+            // If the bookmark exists, toggle the isDeleted status
             Bookmark bookmark = existingBookmark.get();
-            bookmark.setIsDeleted(!bookmark.getIsDeleted()); // true -> false, false -> true
+            bookmark.setIsDeleted(!bookmark.getIsDeleted()); // Toggle the status
             bookmark.setBookmarkedAt(LocalDateTime.now());
             bookmarkRepository.save(bookmark);
             return bookmarkMapper.toBookmark(bookmark); // Return the updated bookmark
         } else {
-            // Create a new bookmark if none exists
+            // If no bookmark exists for the user, create a new one
             Bookmark newBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
+//            newBookmark.setUserId(bookmarkAddRequest.userId); // Set the userId for the new bookmark
             newBookmark.setBookmarkedAt(LocalDateTime.now());
             newBookmark.setIsDeleted(false); // New bookmarks are active
-            newBookmark.setBookmarkedAt(LocalDateTime.now());
             bookmarkRepository.save(newBookmark);
             return bookmarkMapper.toBookmark(newBookmark); // Return the newly created bookmark
         }
