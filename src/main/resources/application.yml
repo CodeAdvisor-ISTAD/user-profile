@@ -1,4 +1,16 @@
 spring:
+  kafka:
+    bootstrap-servers:
+      - 167.172.78.79:9092
+      - 167.172.78.79:9093
+      - 167.172.78.79:9094
+    consumer:
+      group-id: bookmark-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual                  # Number of records between offset commits
   security:
     oauth2:
       resource-server:

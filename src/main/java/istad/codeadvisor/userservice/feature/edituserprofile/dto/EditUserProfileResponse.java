@@ -8,8 +8,9 @@ import org.hibernate.validator.constraints.URL;
 public record EditUserProfileResponse (
         String id,
         Integer userId,
-        String familyName,
-        String givenName,
+//        String familyName,
+//        String givenName,
+        String fullName,
         String username,
         String gender,
         String bio,

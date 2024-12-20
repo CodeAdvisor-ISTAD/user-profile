@@ -10,8 +10,9 @@ public class EditUserProfile {
     @Id
     private String id;
     private String userId;
-    private String familyName;
-    private String givenName;
+//    private String familyName;
+//    private String givenName;
+    private String fullName;
     private String username;
     private String gender;
     private String phoneNumber;

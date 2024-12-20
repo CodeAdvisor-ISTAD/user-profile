@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/edit_user_profiles")
+    @RequestMapping("/api/v1/edit_user_profiles")
 public class EditUserProfileController {
     private final EditUserProfileService editUserProfileService;
 

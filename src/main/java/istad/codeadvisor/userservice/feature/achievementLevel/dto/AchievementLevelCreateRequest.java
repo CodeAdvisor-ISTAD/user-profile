@@ -1,11 +1,12 @@
 package istad.codeadvisor.userservice.feature.achievementLevel.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record AchievementLevelCreateRequest(
-        String currentLevel,
-        Integer share_content_points,
-        Integer ask_question_points,
-        Integer answer_question_points,
-        Integer comment_points,
-        Integer interaction_point
+        Integer share_content_total,
+        Integer ask_question_total,
+        Integer answer_question_total,
+        Integer comment_total,
+        Integer interaction_total
 ){
 }

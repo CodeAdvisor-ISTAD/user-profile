@@ -6,12 +6,14 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
 public record EditUserProfileUpdateRequest (
-        @NotBlank(message = "First name is required")
-        String familyName,
-        @NotBlank(message = "Last name is required")
-        String givenName,
+//        @NotBlank(message = "First name is required")
+//        String familyName,
+//        @NotBlank(message = "Last name is required")
+//        String givenName,
 //        @NotBlank(message = "Username is required")
 //        String username,
+        @NotBlank
+        String fullName,
         @Size(max = 6, message = "Gender must not exceed 6 characters")
         String gender,
         @Size(max = 500, message = "Bio must not exceed 500 characters")
