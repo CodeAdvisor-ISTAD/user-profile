@@ -60,7 +60,44 @@ The Achievement Badge feature handles the creation, retrieval, update, deletion,
 - **PATCH /api/v1/achievement_badges/${badgeName}/is_deleted**: Soft delete badge by badgeName.
 - **PATCH /api/v1/achievement_badges/${badgeName}/is_published**: Publish badge by badgeName.
 - **DELETE /api/v1/achievement_badges/${badgeName}**: Delete badge by badgeName.
-  
+
+### Achievement Level Management 👑
+The Achievement Level feature handles the calculate the total score, determine the user's achievement level, and get the user's achievement level. Key features include:
+
+- **Calcuate the total score **: Calculate the total score for the user based on the achievements.
+- *Determine the user's achievement**: Determine the user's achievement level based on the total score.
+- **Get the user**: Get the user's achievement level by user ID.
+
+#### Endpoints 🚀
+
+- **GET /api/v1/achievement-levels/{userId}**: Retrieve user's achievement by userId.
+
+### Reading History Management 📖
+The Reading History feature handles the creation, retrieval, and deletion. Key features include:
+
+- **Create Reading History**: Create new history and if that history is already exist, it will remove the old histroy and create the new one .
+- **Get all reading history**: Retrieve all reading histories.
+- **Soft Delete reading history**: Soft delete reading history without removing it from the system.
+
+#### Endpoints 🚀
+
+- **POST /api/v1/reading-histories**: add content or forum to reading history.
+- **GET /api/v1/reading-histories**: Retrieve all content or forum from reading history.
+- **PATCH /api/v1/reading-histories/${id}/disable**: Soft delete content or forum reading history.
+
+### Bookmark Management 🔖
+The Bookmark feature handles the creation, retrieval, deletion, and get content or forum from the bookmark feature. Key features include:
+
+- **Add content or Forum to Bookmark**: Add new content or forum to bookmark.
+- **Get all bookmark**: Get all bookmark for each user.
+- **Delete Bookmark**: Remove the content or forum from bookmark.
+
+#### Endpoints 🚀
+
+- **POST /api/v1/bookmarks**: add content or forum to bookmark.
+- **GET /api/v1/bookmarks**: Retrieve all content or forum from bookmark.
+- **DELETE /api/v1/bookmarks/${id}**: Delete content or forum from bookmark.
+
 ## Setup and Installation 🛠
 
 ### Prerequisites 📦
@@ -73,8 +110,8 @@ Before running the services, ensure the following are installed and configured:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/user-profile.git
-   cd user-profile
+   git clone https://github.com/your-repo/user-profile-service.git
+   cd user-profile-service
    ```
 
 2. Build the project using Gradle:
