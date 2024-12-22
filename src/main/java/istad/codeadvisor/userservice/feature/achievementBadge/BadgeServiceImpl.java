@@ -6,9 +6,13 @@ import istad.codeadvisor.userservice.feature.achievementBadge.dto.BadgeResponse;
 import istad.codeadvisor.userservice.feature.achievementBadge.dto.BadgeUpdateRequest;
 import istad.codeadvisor.userservice.mapper.BadgeMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +29,18 @@ public class BadgeServiceImpl implements BadgeService{
                     "This badge is already exist!!");
         }
         AchievementBadge achievementBadge = badgeMapper.fromBadgeCreateRequest(badgeCreateRequest);
+        achievementBadge.setAssignAt(LocalDateTime.now());
         achievementBadge.setIsDeleted(false);
         badgeRepository.save(achievementBadge);
-        return badgeMapper.toAchievementBadge(achievementBadge);
+        return badgeMapper.toAchievementBadgeResponse(achievementBadge);
+    }
+
+    // get all badges
+    @Override
+    public List<AchievementBadge> getAllBadges() {
+        Sort sortById = Sort.by(Sort.Direction.DESC, "id");
+        List<AchievementBadge> achievementBadges = badgeRepository.findAll(sortById);
+        return badgeMapper.toAchievementBadgeResponseList(achievementBadges);
     }
 
     // get badge
@@ -37,7 +50,7 @@ public class BadgeServiceImpl implements BadgeService{
                 .filter(badge -> !badge.getIsDeleted().equals(true))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "We did not find this badge."));
-        return badgeMapper.toAchievementBadge(achievementBadge);
+        return badgeMapper.toAchievementBadgeResponse(achievementBadge);
     }
 
     // update badge
@@ -48,7 +61,17 @@ public class BadgeServiceImpl implements BadgeService{
                         "We did not find this badge."));
         badgeMapper.fromBadgeUpdateRequest(badgeUpdateRequest, achievementBadge);
         badgeRepository.save(achievementBadge);
-        return badgeMapper.toAchievementBadge(achievementBadge);
+        return badgeMapper.toAchievementBadgeResponse(achievementBadge);
+    }
+
+    // is published
+    @Override
+    public void isPublicBadge(String badgeName) {
+        AchievementBadge achievementBadge = badgeRepository.findByBadgeName(badgeName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "We did not find this badge."));
+        achievementBadge.setIsDeleted(false);
+        badgeRepository.save(achievementBadge);
     }
 
     // disable badge
@@ -61,6 +84,8 @@ public class BadgeServiceImpl implements BadgeService{
         badgeRepository.save(achievementBadge);
     }
 
+
+
     // delete
     @Override
     public void deleteBadge(String badgeName) {
@@ -70,6 +95,4 @@ public class BadgeServiceImpl implements BadgeService{
         badgeRepository.delete(achievementBadge);
         badgeRepository.save(achievementBadge);
     }
-
-    // publish
 }

@@ -1,12 +1,15 @@
 package istad.codeadvisor.userservice.feature.readingHistory.dto;
 
+import istad.codeadvisor.userservice.additional.Content;
+
 import java.time.LocalDateTime;
 
 public record ReadingHistoryResponse(
-        Integer id,
+        String id,
         Integer userId,
         Integer questionId,
         Integer contentId,
+        Content content,
         LocalDateTime readAt
 ) {
 }

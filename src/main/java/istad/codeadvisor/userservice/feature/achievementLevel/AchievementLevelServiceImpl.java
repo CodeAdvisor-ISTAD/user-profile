@@ -15,6 +15,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     private final AchievementLevelRepository achievementLevelRepository;
     private final AchievementMapper achievementMapper;
 
+    // Calculate the total score for the user based on the achievements
     @Override
     public int calculateTotalScore(AchievementLevel achievement) {
         int totalPoints = 0;
@@ -27,6 +28,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
 
         return totalPoints;
     }
+    // Determine the user's achievement level based on the total score
     @Override
     public String determineAchievementLevel(Integer totalPoints) {
         String currentLevel;
@@ -40,6 +42,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
             return "Beginner";
         }
     }
+    // Get the user's achievement level by user ID
     @Override
     public AchievementLevelResponse getAchievementLevelById(Integer userId) {
         // Retrieve the user's achievement data from the repository
