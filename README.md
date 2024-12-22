@@ -110,8 +110,8 @@ Before running the services, ensure the following are installed and configured:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/user-profile-service.git
-   cd user-profile-service
+   git clone https://github.com/your-repo/user-profile.git
+   cd user-profile
    ```
 
 2. Build the project using Gradle:
