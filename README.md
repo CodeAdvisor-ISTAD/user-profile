@@ -49,7 +49,7 @@ The Identity Service includes the following HTML templates located in the `src/m
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/CodeAdvisor-ISTAD/user-profile-service.git
+   git clone https://github.com/CodeAdvisor-ISTAD/user-profile.git
    cd user-profile
    ```
 
