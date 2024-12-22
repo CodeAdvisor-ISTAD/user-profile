@@ -16,25 +16,51 @@ The **User-Profile Service** is a core component of the **CodeAdvisors**  platfo
 - **Spring Boot**: Microservice framework for creating RESTful APIs.
 - **MongoDB**: Database for storing content and tags.
 - **Kafka**: For asynchronous communication (if integrated with other services).
-- **JPA**: For handling relational data persistence.
 - **Eureka**: Service discovery for seamless microservice interaction.
 - **Config**: Centralized configuration management.
 
-## User profile Services 📝
+## User profile Services ✨
 
-### User profile Management 📄
-The Content Service handles the profile editing with validation, tracking reading history, bookmarking resources, achievement badges, and achievement levels. Key features include:
+### User profile Management 👤
+The User Profile feature handles the creation, retrieval, update, deletion, and search of user profile. Key features include:
 
 - **Create User profile**: Add new new user.
 - **Update User Profile**: Modify user information.
-- **Search User Profile**: Find User Profile base on username.
-- **Soft Delete**: Soft delete user profile without removing it from the system.
+- **Search User Profile**: Find User Profile base on username and search all user.
+- **Disable User Profile**: Soft delete user profile without removing it from the system.
+- **Enable User Profile**: Allows to make user profile active again after it has been disabled.
+- **Delete User Profile**: Delete user profile and also removing it from the system.
 
 #### Endpoints 🚀
 
-- **GET /api/v1/edit_user_profiles/**: Retrieve all user profile.
-- **GET /api/v1/edit_user_profiles/${username}: Retrieve user profile by username.
+- **POST /api/v1/edit_user_profiles**: Create user profile.
+- **GET /api/v1/edit_user_profiles**: Retrieve all user profile.
+- **GET /api/v1/edit_user_profiles/${username}**: Retrieve user profile by username.
+- **PATCH /api/v1/contents/{username}**: Update user profile by username.
+- **PATCH /api/v1/edit_user_profiles/${username}/disable**: Disable user profile by username.
+- **PATCH /api/v1/edit_user_profiles/${username}/enable**: Enable user profile by username.
+- **DELETE /api/v1/edit_user_profiles/${username}**: Delete user profile by username.
 
+### Achievement Badge Management 🌟
+The Achievement Badge feature handles the creation, retrieval, update, deletion, and search of user profile. Key features include:
+
+- **Create Badge**: Add new new badge.
+- **Update Badge**: Modify badge.
+- **Search Badge**: Find badge by badgeName and find all badge.
+- **Soft Delete Badge**: Soft delete badge without removing it from the system.
+- **Enable Badge**:  Allows to make a badge public again after it has been soft deleted.
+- **Delete User Profile**: Delete badge and also removing it from the system.
+
+#### Endpoints 🚀
+
+- **POST /api/v1/achievement_badges**: Create badge.
+- **GET /api/v1/achievement_badges**: Retrieve all badge.
+- **GET /api/v1/achievement_badges/${badgeName}**: Retrieve badge by badgeName.
+- **PATCH /api/v1/achievement_badges/${badgeName}**: Update badge by badgeName.
+- **PATCH /api/v1/achievement_badges/${badgeName}/is_deleted**: Soft delete badge by badgeName.
+- **PATCH /api/v1/achievement_badges/${badgeName}/is_published**: Publish badge by badgeName.
+- **DELETE /api/v1/achievement_badges/${badgeName}**: Delete badge by badgeName.
+  
 ## Setup and Installation 🛠
 
 ### Prerequisites 📦
