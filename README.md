@@ -12,75 +12,59 @@ The **User-Profile Service** is a core component of the **CodeAdvisors**  platfo
 - **Achievement Badges**: Earn recognition for milestones
 - **Achievement Levels**: Progress through defined stages of activity.
 
----
-
-## Templates for Testing UI 🖥️
-
-The Identity Service includes the following HTML templates located in the `src/main/resources/templates` directory:
-
-1. **user-profile.html**:  
-   Used to view user information.
-
-2. **edit-user-profile.html**:  
-   Used to edit user information.
-
----
-
 ## Technologies Used ⚙️
+- **Spring Boot**: Microservice framework for creating RESTful APIs.
+- **MongoDB**: Database for storing content and tags.
+- **Kafka**: For asynchronous communication (if integrated with other services).
+- **JPA**: For handling relational data persistence.
+- **Eureka**: Service discovery for seamless microservice interaction.
+- **Config**: Centralized configuration management.
 
-- **Spring Boot**: Backend framework for building RESTful APIs and authentication.
-- **Spring Security**: For managing OAuth2 and resource server functionality.
-- **JPA with MongoDB**: For storing user information and data.
+## User profile Services 📝
 
----
+### User profile Management 📄
+The Content Service handles the profile editing with validation, tracking reading history, bookmarking resources, achievement badges, and achievement levels. Key features include:
 
-## Prerequisites 📦
+- **Create User profile**: Add new new user.
+- **Update User Profile**: Modify user information.
+- **Search User Profile**: Find User Profile base on username.
+- **Soft Delete**: Soft delete user profile without removing it from the system.
 
-1. **JDK 21**: Required for building and running the service.
-2. **MongoDB Database**: Ensure it is set up with the necessary configurations:
-    - URL: `mongodb://localhost:27017/db-edit-profile`
-    - Username: `user-service`
-    - 
-3. **Eureka Server**: Required for service registration and discovery.
+#### Endpoints 🚀
 
----
+- **GET /api/v1/edit_user_profiles/**: Retrieve all user profile.
+- **GET /api/v1/edit_user_profiles/${username}: Retrieve user profile by username.
 
-## Running the Service 🚀
+## Setup and Installation 🛠
+
+### Prerequisites 📦
+Before running the services, ensure the following are installed and configured:
+- **JDK 21** (for building and running the application)
+- **MongoDB** (for content and tag storage)
+- **Kafka** (if used for inter-service communication)
+
+### Steps to Run 🚶‍♂️
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/CodeAdvisor-ISTAD/user-profile.git
+   git clone https://github.com/your-repo/user-profile.git
    cd user-profile
    ```
 
-2. Build the project:
+2. Build the project using Gradle:
    ```bash
    ./gradlew build
    ```
 
-3. Start the application:
+3. Run the services:
    ```bash
    ./gradlew bootRun
    ```
 
-4. Access the service via `http://localhost:8080`.
-
----
-
-## Testing the UI 🧪
-
-1. **Setup**: Start the service and ensure the database are running.
-2. **Access Templates**: Open the following endpoints in your browser:
-    - **Login**: `http://localhost:9090/login`
-    - **Registration**: `http://localhost:9090/register`
-    - **Password Recovery**: `http://localhost:9090/forget-password`
-3. **Test Flows**:
-
----
+4. Ensure MongoDB and Kafka (if applicable) are running before starting the services.
 
 ## License 📜
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
----
 
 Built with ❤️ by the CodeAdvisors Team.
