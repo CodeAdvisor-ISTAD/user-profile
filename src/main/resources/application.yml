@@ -1,4 +1,15 @@
+server:
+  port: 8085
 spring:
+  application:
+    name: user-service
+  profiles:
+    active: dev
+  config:
+    import: "config-server:"
+  cloud:
+    config:
+      uri: http://167.172.78.79:8888
   kafka:
     bootstrap-servers:
       - 167.172.78.79:9092
@@ -9,15 +20,18 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    listener:
-      ack-mode: manual                  # Number of records between offset commits
+    properties:
+      spring.json.trusted.packages: '*'                 # Number of records between offset commits
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.trusted.packages: '*'
   security:
     oauth2:
       resource-server:
         jwt:
           issuer-uri: http://127.0.0.1:9090
-  application:
-    name: user-service
   data:
     mongodb:
       uri: mongodb://localhost:27017/db-edit-profile
@@ -33,4 +47,5 @@ eureka:
   client:
     serviceUrl:
       #      defaultZone: http://service-registry:8761/eureka/
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://167.172.78.79:8761/eureka/
+
