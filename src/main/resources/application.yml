@@ -1,51 +1,72 @@
 server:
   port: 8085
+
 spring:
-  application:
-    name: user-service
   profiles:
     active: dev
   config:
-    import: "config-server:"
+    import: "configserver:"
   cloud:
     config:
       uri: http://167.172.78.79:8888
+  application:
+    name: user-service
+
   kafka:
-    bootstrap-servers:
-      - 167.172.78.79:9092
-      - 167.172.78.79:9093
-      - 167.172.78.79:9094
-    consumer:
-      group-id: bookmark-service
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    properties:
-      spring.json.trusted.packages: '*'                 # Number of records between offset commits
     producer:
+      bootstrap-servers:
+        - 167.172.78.79:9092
+        - 167.172.78.79:9093
+        - 167.172.78.79:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
-        spring.json.trusted.packages: '*'
-  security:
-    oauth2:
-      resource-server:
-        jwt:
-          issuer-uri: http://127.0.0.1:9090
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/db-edit-profile
+        spring.kafka.producer.value.serializer.add.type.headers: true
+    consumer:
+      enable-auto-commit: true
+      bootstrap-servers:
+        - 167.172.78.79:9092
+        - 167.172.78.79:9093
+        - 167.172.78.79:9094
+      group-id: user-service
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ContentProducer
+#    consumer:
+#      enable-auto-commit: true
+#      bootstrap-servers:
+#        - 167.172.78.79:9092
+#        - 167.172.78.79:9093
+#        - 167.172.78.79:9094
+#      group-id: user-service
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#
+#      properties:
+#        spring:
+#          json:
+#            trusted:
+#              packages: '*'
+#        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+#        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+
 logging:
+
   level:
+    org.springframework.kafka.listener: DEBUG
+    org.springframework.kafka.core: DEBUG
     org:
       springframework:
         data:
           mongodb:
             core:
               MongoTemplate: DEBUG
-eureka:
-  client:
-    serviceUrl:
-      #      defaultZone: http://service-registry:8761/eureka/
-      defaultZone: http://167.172.78.79:8761/eureka/
-

@@ -1,6 +1,5 @@
 package istad.codeadvisor.userservice.domain;
 
-import istad.codeadvisor.userservice.additional.Content;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +14,7 @@ public class ReadingHistory {
     private Integer userId;
     private Integer questionId;
     private Integer contentId; // Foreign key for content (can be mapped if needed)
-    private Content content;
+//    private Content content;
     private LocalDateTime readAt;
     private Boolean isDeleted;
 }
