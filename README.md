@@ -14,6 +14,12 @@ The **User-Profile Service** is a core component of the **CodeAdvisors**  platfo
 - **Achievement Badges**: Earn recognition for milestones
 - **Achievement Levels**: Progress through defined stages of activity.
 
+## Prerequisites 📦
+
+1. JDK 21: Required for building and running the server.
+2. Identity Service: Ensure the Identity Service is running at http://127.0.0.1:8085.
+3. Frontend Service: Ensure the main Next.js frontend application is running at http://127.0.0.1:3000.
+
 ## Technologies Used ⚙️
 - **Spring Boot**: Microservice framework for creating RESTful APIs.
 - **MongoDB**: Database for storing content and tags.
