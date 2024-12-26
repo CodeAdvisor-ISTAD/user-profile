@@ -14,7 +14,7 @@ public class AchievementLevelController {
     private final AchievementLevelService achievementLevelService;
 
     @GetMapping("/{userId}")
-    public AchievementLevelResponse getAchievementLevelById(@PathVariable Integer userId) {
+    public AchievementLevelResponse getAchievementLevelById(@PathVariable String userId) {
         // Call the service method and return the result
         return achievementLevelService.getAchievementLevelById(userId);
     }

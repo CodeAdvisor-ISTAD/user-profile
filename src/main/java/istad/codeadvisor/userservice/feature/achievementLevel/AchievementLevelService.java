@@ -8,12 +8,14 @@ public interface AchievementLevelService {
     String determineAchievementLevel(Integer totalPoints);
 
     // Get achievement level by user id
-    AchievementLevelResponse getAchievementLevelById(Integer userId);
+    AchievementLevelResponse getAchievementLevelById(String userId);
 
     int calculateTotalScore(AchievementLevel achievement);
 
     // handle the update from the content service
-    void updateFromContentService(Integer userId, Integer shareContentTotal, Integer commentTotal, Integer likeTotal);
+    void updateFromContentService(String userId, Integer shareContentTotal, Integer commentTotal, Integer likeTotal);
     // handle the update from the forum service
-    void updateFromForumService(Integer userId, Integer askQuestionTotal, Integer answerQuestionTotal);
+    void updateFromForumService(String userId, Integer askQuestionTotal, Integer answerQuestionTotal);
+    // handle the update from the community engagement service
+    void updateFromCommunityService(String userId, String contentId, String reactionType);
 }

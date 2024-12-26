@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AchievementLevel {
     @Id
     private String id;
-    private Integer userId;
+    private String userId;
     private UserData userData;
     private String currentLevel; // E.g., "Contributor"
     private Integer share_content_total;

@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface AchievementLevelRepository extends MongoRepository<AchievementLevel, String> {
-    Optional<AchievementLevel> findByUserId(Integer userId);
+    Optional<AchievementLevel> findByUserId(String userId);
 }

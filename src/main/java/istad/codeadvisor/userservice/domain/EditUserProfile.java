@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class EditUserProfile {
     @Id
     private String id;
-    private String userId;
 //    private String familyName;
 //    private String givenName;
     private String fullName;

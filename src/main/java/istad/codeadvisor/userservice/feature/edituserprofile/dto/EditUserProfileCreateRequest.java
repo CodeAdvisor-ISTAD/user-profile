@@ -22,15 +22,12 @@ public record EditUserProfileCreateRequest (
     String jobPosition,
     String school,
     String workPlace,
-    String profileImage,
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date of birth must be in the format YYYY-MM-DD")
     String dob,
-    String pob,
+    String pob
 
-    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "Invalid phone number")
-    String phone,
-    @URL(message = "Invalid URL format")
-    String coverColor
+//    @URL(message = "Invalid URL format")
+//    String coverColor
 
 ) {
 }

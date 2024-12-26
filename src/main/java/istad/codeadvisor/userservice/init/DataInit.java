@@ -15,7 +15,7 @@ public class DataInit {
     public void init() {
         if (achievementLevelRepository.count() == 0) {
             AchievementLevel achievement1 = AchievementLevel.builder()
-                    .userId(123)
+                    .userId("1")
 //                    .comment_total(20)
 //                    .answer_question_total(10)
 //                    .interaction_total(50)
@@ -24,10 +24,10 @@ public class DataInit {
                     .build();
 
             AchievementLevel achievement2 = AchievementLevel.builder()
-                    .userId(2)
+                    .userId("2")
 //                    .comment_total(4)
 //                    .answer_question_total(1)
-//                    .interaction_total(25)
+                    .interaction_total(0)
 //                    .ask_question_total(15)
 //                    .share_content_total(2) // No chance of accidentally referencing achievement1 here
                     .build();
