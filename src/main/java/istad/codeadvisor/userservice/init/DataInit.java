@@ -25,7 +25,7 @@ public class DataInit {
 
             AchievementLevel achievement2 = AchievementLevel.builder()
                     .userId("2")
-//                    .comment_total(4)
+                    .comment_total(1)
 //                    .answer_question_total(1)
                     .interaction_total(0)
 //                    .ask_question_total(15)

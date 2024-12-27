@@ -1,13 +1,11 @@
-package istad.codeadvisor.userservice.config.kafka.producer;
-
-import lombok.Data;
-
-import java.time.LocalDateTime;
-
-@Data
-public class ForumProducer {
-    private Integer userId;
-    private Integer askQuestionCount;
-    private Integer answerQuestionCount;
-    private LocalDateTime lastUpdated;
-}
+//package istad.codeadvisor.userservice.config.kafka.producer;
+//
+//import istad.codeadvisor.userservice.config.kafka.BaseProducer;
+//import lombok.Data;
+//
+//@Data
+//public class ForumProducer implements BaseProducer {
+//    private Integer userId;
+//    private Integer askQuestionCount;
+//    private Integer answerQuestionCount;
+//}

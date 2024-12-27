@@ -72,6 +72,17 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
         achievementLevelRepository.save(achievement);
     }
 
+    // Update the user's achievement level based on the comment service data
+    @Override
+    public void updateCommentProducer(String userId, String contentId, String type) {
+        // Retrieve the user's achievement data from the repository
+        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+        achievement.setComment_total(achievement.getComment_total() + 1);
+        // Save the updated achievement data to the repository
+        achievementLevelRepository.save(achievement);
+    }
+
     // Calculate the total score for the user based on the achievements
     @Override
     public int calculateTotalScore(AchievementLevel achievement) {

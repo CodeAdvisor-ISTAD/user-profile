@@ -18,4 +18,6 @@ public interface AchievementLevelService {
     void updateFromForumService(String userId, Integer askQuestionTotal, Integer answerQuestionTotal);
     // handle the update from the community engagement service
     void updateFromCommunityService(String userId, String contentId, String reactionType);
+    // handle the update from the comment service
+    void updateCommentProducer(String userId, String contentId, String type);
 }

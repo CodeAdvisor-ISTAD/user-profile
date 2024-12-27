@@ -21,6 +21,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       properties:
+        spring.json.add.type.headers: true
         spring.kafka.producer.value.serializer.add.type.headers: true
     consumer:
       enable-auto-commit: true
@@ -31,7 +32,8 @@ spring:
       group-id: user-service
       auto-offset-reset: earliest
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: istad.codeadvisor.userservice.config.kafka.BaseProducerDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
         spring:
           json:
@@ -39,8 +41,8 @@ spring:
               packages: '*'
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-#        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ContentProducer
-        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ReactionProducer
+##        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ContentProducer
+        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.BaseProducer
 
 logging:
 
