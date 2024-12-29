@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ConfigConsumer implements BaseProducer {
+public class ConsumerConfig implements BaseProducer {
     private final AchievementLevelServiceImpl achievementLevelServiceImpl;
 
     @KafkaListener(topics = "community-topic-interaction", groupId = "user-service")

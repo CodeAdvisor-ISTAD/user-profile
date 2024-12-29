@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "edit_user_profiles")
-public class EditUserProfile {
+public class UserProfile {
     @Id
     private String id;
 //    private String familyName;

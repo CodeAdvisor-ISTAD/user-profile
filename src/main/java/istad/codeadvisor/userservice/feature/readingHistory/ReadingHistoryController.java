@@ -27,7 +27,7 @@ public class ReadingHistoryController {
 
     // Disable a reading history
     @PatchMapping("/{id}/disable")
-    void deleteReadingHistory(@PathVariable Integer id) {
+    void deleteReadingHistory(@PathVariable String id) {
         readingHistoryService.deleteReadingHistory(id);
     }
 }

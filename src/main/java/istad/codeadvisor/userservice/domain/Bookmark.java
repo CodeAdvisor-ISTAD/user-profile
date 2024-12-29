@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Bookmark {
     @Id
     private String id; // Unique identifier for the bookmark
-    private Integer userId; // Reference to the UserProfile service
+    private String userId; // Reference to the UserProfile service
     private UserData userData;
     private Integer forumId;
     private Integer contentId; // Unique identifier for the content

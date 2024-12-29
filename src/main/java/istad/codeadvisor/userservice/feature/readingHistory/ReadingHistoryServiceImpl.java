@@ -47,8 +47,11 @@ public class ReadingHistoryServiceImpl implements ReadingHistoryService {
 
     // Disable a reading history
     @Override
-    public void deleteReadingHistory(Integer readingHistoryId) {
-        readingHistoryRepository.findByUserIdAndContentIdAndQuestionId(readingHistoryId, readingHistoryId, readingHistoryId);
+    public void deleteReadingHistory(String id) {
+        ReadingHistory readingHistory = readingHistoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reading history not found"));
+        readingHistoryRepository.delete(readingHistory);
+
     }
 
 

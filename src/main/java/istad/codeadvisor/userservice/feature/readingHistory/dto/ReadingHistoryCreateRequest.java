@@ -1,7 +1,7 @@
 package istad.codeadvisor.userservice.feature.readingHistory.dto;
 
 public record ReadingHistoryCreateRequest (
-        Integer userId,
+        String userId,
         Integer contentId,
         Integer questionId
 

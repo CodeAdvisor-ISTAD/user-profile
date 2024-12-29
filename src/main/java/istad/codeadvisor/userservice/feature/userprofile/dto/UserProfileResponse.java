@@ -1,6 +1,6 @@
-package istad.codeadvisor.userservice.feature.edituserprofile.dto;
+package istad.codeadvisor.userservice.feature.userprofile.dto;
 
-public record EditUserProfileResponse (
+public record UserProfileResponse (
         String id,
 //        String familyName,
 //        String givenName,

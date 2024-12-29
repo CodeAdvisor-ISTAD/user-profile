@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public record BadgeResponse(
         ObjectId id,
-        Integer userId,
+        String userId,
         String badgeName,
         String badgeImage,
         LocalDateTime assignAt

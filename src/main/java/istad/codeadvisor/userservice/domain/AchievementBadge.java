@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class AchievementBadge {
     @Id
     private ObjectId id;
-    private Integer userId;
+    private String userId;
     private String badgeImage;
     private String badgeName;
     private LocalDateTime assignAt;

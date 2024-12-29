@@ -1,11 +1,11 @@
-package istad.codeadvisor.userservice.feature.edituserprofile.dto;
+package istad.codeadvisor.userservice.feature.userprofile.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
-public record EditUserProfileUpdateRequest (
+public record UserProfileUpdateRequest (
 //        @NotBlank(message = "First name is required")
 //        String familyName,
 //        @NotBlank(message = "Last name is required")

@@ -4,7 +4,7 @@ import istad.codeadvisor.userservice.additional.UserData;
 
 public record BookmarkResponse(
         String id,
-        Integer userId,
+        String userId,
         Integer forumId,
         UserData userData,
         Integer contentId,

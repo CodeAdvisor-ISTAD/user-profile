@@ -12,5 +12,5 @@ public interface ReadingHistoryService {
     List<ReadingHistoryResponse> getReadingHistories();
 
     // Disable the reading history of a user
-    void deleteReadingHistory(Integer readingHistoryId);
+    void deleteReadingHistory(String id);
 }
