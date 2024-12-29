@@ -24,7 +24,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
 
         AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-//
+        achievement.setShare_content_total(achievement.getShare_content_total() + 1);
         achievementLevelRepository.save(achievement);
     }
 
@@ -36,10 +36,8 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
 
         // Update the user's achievement data with the new forum service data
-        achievement.setAsk_question_total(askQuestionTotal);
-        achievement.setAnswer_question_total(answerQuestionTotal);
-
-
+        achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);
+        achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);
 
         // Save the updated achievement data to the repository
         achievementLevelRepository.save(achievement);
@@ -81,6 +79,33 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
         achievement.setComment_total(achievement.getComment_total() + 1);
         // Save the updated achievement data to the repository
         achievementLevelRepository.save(achievement);
+    }
+
+    // Update the user's achievement level based on the forum service data
+    @Override
+    public void updateForumProducer(String userId, Integer askQuestionCount, Integer answerQuestionCount) {
+        // Retrieve the user's achievement data from the repository
+        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+        // Update ask_question_total if askQuestionCount is not null
+        if (askQuestionCount != null) {
+            achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);
+        }
+        // Update answer_question_total if answerQuestionCount is not null
+        if (answerQuestionCount != null) {
+            achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);
+        }
+
+        // Save the updated achievement data to the repository
+        achievementLevelRepository.save(achievement);
+    }
+
+    // Update the user's achievement level based on the content service data
+    @Override
+    public void updateContentProducer(String userId, String contentId, String type) {
+        // Retrieve the user's achievement data from the repository
+        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
     }
 
     // Calculate the total score for the user based on the achievements

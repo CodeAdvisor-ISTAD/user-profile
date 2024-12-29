@@ -3,6 +3,8 @@ package istad.codeadvisor.userservice.config.kafka;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import istad.codeadvisor.userservice.config.kafka.producer.CommentProducer;
+import istad.codeadvisor.userservice.config.kafka.producer.ContentProducer;
+import istad.codeadvisor.userservice.config.kafka.producer.ForumProducer;
 import istad.codeadvisor.userservice.config.kafka.producer.ReactionProducer;
 import org.apache.kafka.common.serialization.Deserializer;
 
@@ -30,6 +32,10 @@ public class BaseProducerDeserializer implements Deserializer<BaseProducer> {
                 return objectMapper.treeToValue(rootNode, ReactionProducer.class);
             } else if (rootNode.has("contentId") && rootNode.has("type")) {
                 return objectMapper.treeToValue(rootNode, CommentProducer.class);
+            } else if (rootNode.has("askQuestionCount") && rootNode.has("answerQuestionCount")) {
+                return objectMapper.treeToValue(rootNode, ForumProducer.class);
+            } else if (rootNode.has("contentId") && rootNode.has("type")) {
+                return objectMapper.treeToValue(rootNode, ContentProducer.class);
             } else {
                 throw new IllegalArgumentException("Unknown message structure: " + new String(data));
             }
