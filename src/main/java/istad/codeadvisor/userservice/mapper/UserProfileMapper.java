@@ -1,6 +1,7 @@
 package istad.codeadvisor.userservice.mapper;
 
 import istad.codeadvisor.userservice.domain.UserProfile;
+import istad.codeadvisor.userservice.feature.fileupload.dto.ProfileImageResponse;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileCreateRequest;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileResponse;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileUpdateRequest;
@@ -19,4 +20,7 @@ public interface UserProfileMapper {
     List<UserProfileResponse> toUserProfileResponseList(List<UserProfile> userProfiles);
     // update user
     void fromUserProfileUpdateRequest(UserProfileUpdateRequest userProfileUpdateRequest, @MappingTarget UserProfile userProfile);
+    // update profile images
+    // response profile images
+    ProfileImageResponse toProfileImageResponse(UserProfile userProfile);
 }

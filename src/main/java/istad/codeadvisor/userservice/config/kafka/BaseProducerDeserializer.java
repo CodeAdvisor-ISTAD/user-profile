@@ -2,10 +2,7 @@ package istad.codeadvisor.userservice.config.kafka;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import istad.codeadvisor.userservice.config.kafka.producer.CommentProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ContentProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ForumProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ReactionProducer;
+import istad.codeadvisor.userservice.config.kafka.producer.*;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
@@ -30,12 +27,14 @@ public class BaseProducerDeserializer implements Deserializer<BaseProducer> {
             JsonNode rootNode = objectMapper.readTree(data);
             if (rootNode.has("reactionType")) {
                 return objectMapper.treeToValue(rootNode, ReactionProducer.class);
-            } else if (rootNode.has("contentId") && rootNode.has("type")) {
+            } else if (rootNode.has("contentId") && rootNode.has("body")) {
                 return objectMapper.treeToValue(rootNode, CommentProducer.class);
-            } else if (rootNode.has("askQuestionCount") && rootNode.has("answerQuestionCount")) {
-                return objectMapper.treeToValue(rootNode, ForumProducer.class);
-            } else if (rootNode.has("contentId") && rootNode.has("type")) {
+//            } else if (rootNode.has("askQuestionCount") && rootNode.has("answerQuestionCount")) {
+//                return objectMapper.treeToValue(rootNode, ForumProducer.class);
+            } else if (rootNode.has("authorUuid") && rootNode.has("keyword")) {
                 return objectMapper.treeToValue(rootNode, ContentProducer.class);
+            } else if (rootNode.has("username") && rootNode.has("email") && rootNode.has("fullName")) {
+                return objectMapper.treeToValue(rootNode, UserIdentityProducer.class);
             } else {
                 throw new IllegalArgumentException("Unknown message structure: " + new String(data));
             }

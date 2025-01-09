@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 public class ReactionProducer implements BaseProducer {
-    private String userId;
     private String contentId;
+    private String type;
+    private String userId;
     private String reactionType;
 }

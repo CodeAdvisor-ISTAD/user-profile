@@ -2,14 +2,15 @@ package istad.codeadvisor.userservice.config.kafka;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import istad.codeadvisor.userservice.config.kafka.producer.CommentProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ForumProducer;
 import istad.codeadvisor.userservice.config.kafka.producer.ReactionProducer;
+import istad.codeadvisor.userservice.config.kafka.producer.UserIdentityProducer;
 
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ReactionProducer.class, name = "reaction"),
         @JsonSubTypes.Type(value = CommentProducer.class, name = "comment"),
-        @JsonSubTypes.Type(value = ForumProducer.class, name = "forum"),
-        @JsonSubTypes.Type(value = CommentProducer.class, name = "content")
+//        @JsonSubTypes.Type(value = ForumProducer.class, name = "forum"),
+        @JsonSubTypes.Type(value = CommentProducer.class, name = "content"),
+        @JsonSubTypes.Type(value = UserIdentityProducer.class, name = "identity")
 })
 public interface BaseProducer {
 //    //TODO: Comment Producer data

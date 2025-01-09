@@ -7,6 +7,6 @@ import lombok.Data;
 public class CommentProducer implements BaseProducer {
     private String userId;
     private String contentId;
-    private String type;
+//    private String type;
     private String body; // Add this field to match the payload
 }

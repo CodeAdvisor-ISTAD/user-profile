@@ -31,6 +31,7 @@ public class BadgeServiceImpl implements BadgeService{
         AchievementBadge achievementBadge = badgeMapper.fromBadgeCreateRequest(badgeCreateRequest);
         achievementBadge.setAssignAt(LocalDateTime.now());
         achievementBadge.setIsDeleted(false);
+        achievementBadge.setIsPublish(true);
         badgeRepository.save(achievementBadge);
         return badgeMapper.toAchievementBadgeResponse(achievementBadge);
     }
@@ -74,6 +75,16 @@ public class BadgeServiceImpl implements BadgeService{
         badgeRepository.save(achievementBadge);
     }
 
+    // is unpublished
+    @Override
+    public void isUnpublishedBadge(String badgeName) {
+        AchievementBadge achievementBadge = badgeRepository.findByBadgeName(badgeName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "We did not find this badge."));
+        achievementBadge.setIsDeleted(true);
+        badgeRepository.save(achievementBadge);
+    }
+
     // disable badge
     @Override
     public void disableBadge(String badgeName) {
@@ -84,7 +95,15 @@ public class BadgeServiceImpl implements BadgeService{
         badgeRepository.save(achievementBadge);
     }
 
-
+    // enable badge
+    @Override
+    public void enableBadge(String badgeName) {
+        AchievementBadge achievementBadge = badgeRepository.findByBadgeName(badgeName)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "We did not find this badge."));
+        achievementBadge.setIsDeleted(false);
+        badgeRepository.save(achievementBadge);
+    }
 
     // delete
     @Override

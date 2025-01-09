@@ -42,10 +42,20 @@ public class BadgeController {
     void disableBadgeName(@Valid @PathVariable("badgeName") String badgeName) {
         badgeService.disableBadge(badgeName);
     }
+    // enable badge
+    @PatchMapping("/{badgeName}/is_enabled")
+    void enableBadgeName(@Valid @PathVariable("badgeName") String badgeName) {
+        badgeService.enableBadge(badgeName);
+    }
     // is published badge
     @PatchMapping("/{badgeName}/is_published")
     void isPublicBadge(@Valid @PathVariable("badgeName") String badgeName) {
         badgeService.isPublicBadge(badgeName);
+    }
+    // is unpublished badge
+    @PatchMapping("/{badgeName}/is_unpublished")
+    void isUnpublishedBadge(@Valid @PathVariable("badgeName") String badgeName) {
+        badgeService.isUnpublishedBadge(badgeName);
     }
     // delete
     @DeleteMapping("/{badgeName}")

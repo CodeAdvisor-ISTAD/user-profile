@@ -1,5 +1,7 @@
 package istad.codeadvisor.userservice.feature.userprofile.dto;
 
+import istad.codeadvisor.userservice.domain.AchievementLevel;
+import istad.codeadvisor.userservice.feature.achievementLevel.dto.AchievementLevelResponse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

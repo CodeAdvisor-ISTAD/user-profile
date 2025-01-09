@@ -2,6 +2,11 @@ server:
   port: 8085
 
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9090
   profiles:
     active: dev
   config:
@@ -13,19 +18,27 @@ spring:
     name: user-service
 
   kafka:
+    security:
+      protocol: SSL
+    ssl:
+        trust-store-location: classpath:kafka.server.truststore.jks
+        trust-store-password: password123
+        key-store-location: classpath:kafka.server.keystore.jks
+        key-store-password: password123
+        key-password: password123
     producer:
       bootstrap-servers:
-        - 167.172.78.79:9092
-        - 167.172.78.79:9093
-        - 167.172.78.79:9094
+        - 202.178.125.77:29093
+        - 202.178.125.77:39093
+        - 202.178.125.77:49093
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       enable-auto-commit: true
       bootstrap-servers:
-        - 167.172.78.79:9092
-        - 167.172.78.79:9093
-        - 167.172.78.79:9094
+        - 202.178.125.77:29093
+        - 202.178.125.77:39093
+        - 202.178.125.77:49093
       group-id: user-service
       auto-offset-reset: earliest
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
@@ -40,9 +53,16 @@ spring:
         spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
 ##        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ContentProducer
         spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.BaseProducer
+#handle file size
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 5MB
 
+file-upload:
+  server-path: D://code-advisors//fileUpload//
+  base-uri: http://127.0.0.1:8168/
 logging:
-
   level:
     org.springframework.kafka.listener: DEBUG
     org.springframework.kafka.core: DEBUG

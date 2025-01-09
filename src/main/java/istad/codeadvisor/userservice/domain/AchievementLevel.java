@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 @Data
 @Builder
 @Document(collection = "achievement_levels")
@@ -13,13 +14,24 @@ public class AchievementLevel {
     @Id
     private String id;
     private String userId;
+    private String username;
     private UserData userData;
     private String currentLevel; // E.g., "Contributor"
-    private Integer share_content_total;
-    private Integer ask_question_total;
-    private Integer answer_question_total;
-    private Integer comment_total;
-    private Integer interaction_total;
+    @Builder.Default
+    private Integer share_content_total = 0;
+
+    @Builder.Default
+    private Integer ask_question_total = 0;
+
+    @Builder.Default
+    private Integer answer_question_total = 0;
+
+    @Builder.Default
+    private Integer comment_total = 0;
+
+    @Builder.Default
+    private Integer interaction_total = 0;
     private Boolean isPublish;
     private Boolean isDeleted;
+
 }

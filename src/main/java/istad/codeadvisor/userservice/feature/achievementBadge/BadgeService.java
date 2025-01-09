@@ -18,8 +18,12 @@ public interface BadgeService {
     BadgeResponse updateBadgeByName(String badgeName, BadgeUpdateRequest badgeUpdateRequest);
     // is public
     void isPublicBadge(String badgeName);
+    // is unpublished
+    void isUnpublishedBadge(String badgeName);
     // disable
     void disableBadge(String badgeName);
+    // enable
+    void enableBadge(String badgeName);
     // delete
     void deleteBadge(String badgeName);
 }

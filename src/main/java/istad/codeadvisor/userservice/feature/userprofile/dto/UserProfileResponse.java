@@ -1,5 +1,8 @@
 package istad.codeadvisor.userservice.feature.userprofile.dto;
 
+import istad.codeadvisor.userservice.domain.AchievementLevel;
+import istad.codeadvisor.userservice.feature.achievementLevel.dto.AchievementLevelResponse;
+
 public record UserProfileResponse (
         String id,
 //        String familyName,
@@ -15,6 +18,7 @@ public record UserProfileResponse (
         String profileImage,
         String dob,
         String pob,
-        String coverColor
+        String coverColor,
+        AchievementLevelResponse achievementLevel
 ) {
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,8 +51,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     // Get all bookmarks for a user
     @Override
-    public List<BookmarkResponse> getBookmarks() {
-        List<Bookmark> bookmarks = bookmarkRepository.findAll();
+    public List<BookmarkResponse> getBookmarks(String userId) {
+        List<Bookmark> bookmarks = Collections.singletonList(bookmarkRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Do not have any bookmark !")));
         return bookmarkMapper.toBookmarkList(bookmarks);
     }
 

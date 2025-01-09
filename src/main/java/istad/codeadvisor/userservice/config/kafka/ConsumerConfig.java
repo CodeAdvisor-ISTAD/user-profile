@@ -1,10 +1,8 @@
 package istad.codeadvisor.userservice.config.kafka;
 
-import istad.codeadvisor.userservice.config.kafka.producer.CommentProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ContentProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ForumProducer;
-import istad.codeadvisor.userservice.config.kafka.producer.ReactionProducer;
+import istad.codeadvisor.userservice.config.kafka.producer.*;
 import istad.codeadvisor.userservice.feature.achievementLevel.AchievementLevelServiceImpl;
+import istad.codeadvisor.userservice.feature.userprofile.UserProfileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,13 +13,16 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ConsumerConfig implements BaseProducer {
     private final AchievementLevelServiceImpl achievementLevelServiceImpl;
+    private final UserProfileServiceImpl userProfileServiceImpl;
 
-    @KafkaListener(topics = "community-topic-interaction", groupId = "user-service")
+    // Community interaction consumer
+    @KafkaListener(topics = "content-reacted-events-topic", groupId = "user-service")
     public void handleCommunityInteraction(ReactionProducer reactionProducer) {
         try {
-            achievementLevelServiceImpl.updateFromCommunityService(
-                    reactionProducer.getUserId(),
+            achievementLevelServiceImpl.updateFromReactionProducer(
                     reactionProducer.getContentId(),
+                    reactionProducer.getType(),
+                    reactionProducer.getUserId(),
                     reactionProducer.getReactionType()
             );
             log.info("Successfully processed ReactionProducer message: {}", reactionProducer);
@@ -30,13 +31,14 @@ public class ConsumerConfig implements BaseProducer {
         }
     }
 
+    // Comment consumer
     @KafkaListener(topics = "comment-created-events-topic", groupId = "user-service")
     public void handleCommentEvents(CommentProducer commentProducer) {
         try {
             achievementLevelServiceImpl.updateCommentProducer(
                     commentProducer.getUserId(),
                     commentProducer.getContentId(),
-                    commentProducer.getType()
+                    commentProducer.getBody()
             );
             log.info("Successfully processed CommentProducer message: {}", commentProducer);
         } catch (Exception e) {
@@ -44,31 +46,40 @@ public class ConsumerConfig implements BaseProducer {
         }
     }
 
-    @KafkaListener(topics = "forum-topic-questions", groupId = "user-service")
-    public void handleForumQuestions(ForumProducer forumProducer) {
-        try {
-            achievementLevelServiceImpl.updateFromForumService(
-                    forumProducer.getUserId(),
-                    forumProducer.getAskQuestionCount(),
-                    forumProducer.getAnswerQuestionCount()
-            );
-            log.info("Successfully processed ForumProducer message: {}", forumProducer);
-        } catch (Exception e) {
-            log.error("Error processing ForumProducer message: {}", forumProducer, e);
-        }
-    }
-
+    // Forum consumer
     @KafkaListener(topics = "content-topic-answers", groupId = "user-service")
     public void handleForumAnswers(ContentProducer contentProducer) {
         try {
             achievementLevelServiceImpl.updateContentProducer(
-                    contentProducer.getUserId(),
-                    contentProducer.getContentId(),
-                    contentProducer.getType()
+                    contentProducer.getId(),
+                    contentProducer.getTitle(),
+                    contentProducer.getAuthorUuid(),
+//                    contentProducer.getSlug(),
+//                    contentProducer.getContent(),
+//                    contentProducer.getThumbnail(),
+                    contentProducer.getKeyword()
+
             );
             log.info("Successfully processed ForumProducer message: {}", contentProducer);
         } catch (Exception e) {
             log.error("Error processing ForumProducer message: {}", contentProducer, e);
+        }
+    }
+
+    // UserIdentity consumer
+    @KafkaListener(topics = "user-created-events-topic", groupId = "user-service")
+    public void handleUserIdentity(UserIdentityProducer userIdentityProducer) {
+        try {
+            userProfileServiceImpl.updateUserProfileFromIdentity(
+                    userIdentityProducer.getUuid(),
+                    userIdentityProducer.getUsername(),
+                    userIdentityProducer.getEmail(),
+                    userIdentityProducer.getFullName(),
+                    userIdentityProducer.getProfileImage()
+            );
+            log.info("Successfully processed UserIdentityProducer message: {}", userIdentityProducer);
+        } catch (Exception e) {
+            log.error("Error processing UserIdentityProducer message: {}", userIdentityProducer, e);
         }
     }
 }

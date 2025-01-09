@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface AchievementLevelRepository extends MongoRepository<AchievementLevel, String> {
     Optional<AchievementLevel> findByUserId(String userId);
+    Optional<AchievementLevel> findByUsername(String username);
 }
