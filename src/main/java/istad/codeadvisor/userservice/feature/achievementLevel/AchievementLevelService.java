@@ -30,8 +30,10 @@ public interface AchievementLevelService {
     // handle the update from the comment service
     void updateCommentProducer(String userId, String contentId, String body);
     // handle the update from forum service
-    void updateForumProducer(String userId, Integer askQuestionCount, Integer answerQuestionCount);
-    // handle the update from the content service
+//    void updateForumProducer(String userId, Integer askQuestionCount, Integer answerQuestionCount);
+    void createForumProducer(String uuid, String authorUuid, String slug,  String description);
+    void answerForumProducer(String questionOwnerUuid, String answerOwnerUuid, String description, String forumSlug);
+//    // handle the update from the content service
     void updateContentProducer(
             String id,
             String title,

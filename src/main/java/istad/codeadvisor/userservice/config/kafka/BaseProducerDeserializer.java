@@ -35,6 +35,10 @@ public class BaseProducerDeserializer implements Deserializer<BaseProducer> {
                 return objectMapper.treeToValue(rootNode, ContentProducer.class);
             } else if (rootNode.has("username") && rootNode.has("email") && rootNode.has("fullName")) {
                 return objectMapper.treeToValue(rootNode, UserIdentityProducer.class);
+            }else if (rootNode.has("uuid") && rootNode.has("description") && rootNode.has("expectedAnswers")) {
+                return objectMapper.treeToValue(rootNode, AskQuestionProducer.class);
+            }else if (rootNode.has("answerOwnerUuid") && rootNode.has("questionOwnerUuid") && rootNode.has("forumSlug")) {
+                return objectMapper.treeToValue(rootNode, AnswerQuestionProducer.class);
             } else {
                 throw new IllegalArgumentException("Unknown message structure: " + new String(data));
             }

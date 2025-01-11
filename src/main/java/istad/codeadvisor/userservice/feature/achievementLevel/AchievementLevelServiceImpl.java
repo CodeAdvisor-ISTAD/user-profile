@@ -1,6 +1,5 @@
 package istad.codeadvisor.userservice.feature.achievementLevel;
 
-import istad.codeadvisor.userservice.config.kafka.producer.ContentProducer;
 import istad.codeadvisor.userservice.domain.AchievementLevel;
 import istad.codeadvisor.userservice.feature.achievementLevel.dto.AchievementLevelResponse;
 import istad.codeadvisor.userservice.mapper.AchievementMapper;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +17,6 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
 
     private final AchievementLevelRepository achievementLevelRepository;
     private final AchievementMapper achievementMapper;
-
-//    // Update the user's achievement level based on the content service data
-//    @Override
-//    public void updateFromContentService(String userId, Integer shareContentTotal, Integer commentTotal, Integer likeTotal) {
-//        // Retrieve the user's achievement data from the repository
-//
-//        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-//        achievement.setShare_content_total(achievement.getShare_content_total() + 1);
-//        achievementLevelRepository.save(achievement);
-//    }
 
     // Update the user's achievement level based on the forum service data
     @Override
@@ -84,21 +71,24 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
         achievementLevelRepository.save(achievement);
     }
 
-    // Update the user's achievement level based on the forum service data
     @Override
-    public void updateForumProducer(String userId, Integer askQuestionCount, Integer answerQuestionCount) {
+    public void createForumProducer(String authorUuid, String uuid , String slug, String description) {
         // Retrieve the user's achievement data from the repository
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
+        AchievementLevel achievement = achievementLevelRepository.findByUserId(authorUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-        // Update ask_question_total if askQuestionCount is not null
-        if (askQuestionCount != null) {
-            achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);
-        }
-        // Update answer_question_total if answerQuestionCount is not null
-        if (answerQuestionCount != null) {
-            achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);
-        }
 
+        achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);
+        // Save the updated achievement data to the repository
+        achievementLevelRepository.save(achievement);
+    }
+
+    @Override
+    public void answerForumProducer(String questionOwnerUuid, String answerOwnerUuid, String description, String forumSlug) {
+        // Retrieve the user's achievement data from the repository
+        AchievementLevel achievement = achievementLevelRepository.findByUserId(questionOwnerUuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+
+        achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);
         // Save the updated achievement data to the repository
         achievementLevelRepository.save(achievement);
     }
@@ -142,7 +132,6 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     // Determine the user's achievement level based on the total score
     @Override
     public String determineAchievementLevel(Integer totalPoints) {
-        String currentLevel;
         if (totalPoints >= 5000) {
             return "Verified Expert";
         } else if (totalPoints >= 3500 && totalPoints < 4999) {

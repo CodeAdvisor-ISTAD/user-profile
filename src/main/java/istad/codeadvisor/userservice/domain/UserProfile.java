@@ -14,6 +14,7 @@ public class UserProfile {
     private String id;
 //    private String familyName;
 //    private String givenName;
+    private String authorUuid;
     private String fullName;
     private String username;
     private String gender;
