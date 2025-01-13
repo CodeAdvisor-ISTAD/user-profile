@@ -144,8 +144,8 @@ public class UserProfileServiceImpl implements UserProfileService {
         achievementLevel.setId(UUID.randomUUID().toString());
         // Set the user ID for AchievementLevel
         achievementLevel.setUserId(userProfile.getId());
-        achievementLevel.setIsDeleted(false);
         achievementLevel.setIsPublish(true);
+        achievementLevel.setIsDeleted(false);
         // Save the updated AchievementLevel
         achievementLevelRepository.save(achievementLevel);
         // Send the updated UserProfile to Kafka

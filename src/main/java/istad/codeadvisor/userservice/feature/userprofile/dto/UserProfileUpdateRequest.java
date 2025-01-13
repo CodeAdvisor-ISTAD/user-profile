@@ -17,11 +17,8 @@ public record UserProfileUpdateRequest (
 //        String username,
 
         String fullName,
-
         String gender,
-
         String bio,
-
         String phoneNumber,
         String jobPosition,
         String school,

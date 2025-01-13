@@ -9,4 +9,5 @@ public class ReactionProducer implements BaseProducer {
     private String type;
     private String userId;
     private String reactionType;
+    private String oldReactionType;
 }

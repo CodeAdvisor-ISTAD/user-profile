@@ -144,8 +144,9 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     }
     // Get the user's achievement level by user ID
     @Override
-    public AchievementLevelResponse getAchievementLevelById(String userId) {
+    public AchievementLevelResponse getAchievementLevelByUserId(String userId) {
         // Retrieve the user's achievement data from the repository
+//        AchievementLevel achievement = achievementLevelRepository.findByIdAndIsPublish(userId, true)
         AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
         // Calculate the total score for the user
@@ -161,7 +162,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     // Disable the user's achievement level by username
     @Override
     public void disableAchievementLevel(String username) {
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(username)
+        AchievementLevel achievement = achievementLevelRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
         achievement.setIsDeleted(true);
         achievementLevelRepository.save(achievement);
@@ -170,7 +171,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     // Enable the user's achievement level by username
     @Override
     public void enableAchievementLevel(String username) {
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(username)
+        AchievementLevel achievement = achievementLevelRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
         achievement.setIsDeleted(false);
         achievementLevelRepository.save(achievement);
@@ -179,18 +180,18 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     // isPublic
     @Override
     public void isPublic(String username) {
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(username)
+        AchievementLevel achievement = achievementLevelRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-        achievement.setIsDeleted(false);
+        achievement.setIsPublish(true);
         achievementLevelRepository.save(achievement);
     }
 
     // isUnpublished
     @Override
     public void isUnpublished(String username) {
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(username)
+        AchievementLevel achievement = achievementLevelRepository.findByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-        achievement.setIsDeleted(true);
+        achievement.setIsPublish(false);
         achievementLevelRepository.save(achievement);
     }
 }

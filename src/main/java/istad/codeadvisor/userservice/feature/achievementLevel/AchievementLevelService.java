@@ -10,7 +10,7 @@ public interface AchievementLevelService {
     String determineAchievementLevel(Integer totalPoints);
 
     // Get achievement level by user id
-    AchievementLevelResponse getAchievementLevelById(String userId);
+    AchievementLevelResponse getAchievementLevelByUserId(String userId);
 
     // Disable achievement level by username
     void disableAchievementLevel(String username);

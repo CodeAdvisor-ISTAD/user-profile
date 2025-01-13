@@ -17,7 +17,7 @@ public class AchievementLevelController {
     @GetMapping("/me")
     public AchievementLevelResponse getMe(@AuthenticationPrincipal Jwt jwt) {
         String userId = jwt.getClaimAsString("userId");
-        return achievementLevelService.getAchievementLevelById(userId);
+        return achievementLevelService.getAchievementLevelByUserId(userId);
     }
 
     // Get the achievement level by username
@@ -25,7 +25,7 @@ public class AchievementLevelController {
     @GetMapping("/{userId}")
     public AchievementLevelResponse getAchievementLevelByUserId(@PathVariable String userId) {
         // Call the service method and return the result
-        return achievementLevelService.getAchievementLevelById(userId);
+        return achievementLevelService.getAchievementLevelByUserId(userId);
     }
 
     // Disable the achievement level by username
@@ -41,15 +41,18 @@ public class AchievementLevelController {
     }
 
     // IsPublic: true
-    @PatchMapping("/{username}/is-public")
-    public void isPublic(@PathVariable String username) {
+    @PatchMapping("/is-public")
+    public void isPublic(@AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaimAsString("username");
         achievementLevelService.isPublic(username);
     }
 
     // IsUnpublished
-    @PatchMapping("/{username}/is-unpublished")
-    public void isUnpublished(@PathVariable String username) {
+    @PatchMapping("/is-unpublished")
+    public void isUnpublished(@AuthenticationPrincipal Jwt jwt) {
+        String username = jwt.getClaimAsString("username");
         achievementLevelService.isUnpublished(username);
     }
+
 
 }
