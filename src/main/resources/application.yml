@@ -10,8 +10,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://202.178.125.77:5403/user-service
+<<<<<<< HEAD
       authentication-database: admin
       database: user-service
+=======
+>>>>>>> 9cc012cd7f1a2cd950a682a06e6ca75517f52d54
   profiles:
     active: dev
   config:
@@ -39,7 +42,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      enable-auto-commit: true
       bootstrap-servers:
         - 167.172.78.79:29093
         - 167.172.78.79:39093
