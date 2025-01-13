@@ -10,11 +10,6 @@ spring:
   data:
     mongodb:
       uri: mongodb://202.178.125.77:5403/user-service
-<<<<<<< HEAD
-      authentication-database: admin
-      database: user-service
-=======
->>>>>>> 9cc012cd7f1a2cd950a682a06e6ca75517f52d54
   profiles:
     active: dev
   config:
