@@ -8,6 +8,7 @@ public record UserProfileResponse (
 //        String familyName,
 //        String givenName,
         String fullName,
+        String authorUuid,
         String username,
         String gender,
         String bio,
