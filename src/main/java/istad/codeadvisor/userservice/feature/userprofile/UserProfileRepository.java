@@ -13,6 +13,7 @@ public interface UserProfileRepository extends MongoRepository<UserProfile, Stri
 
     Optional<UserProfile> findByUsernameAndIsDeleted(String username, Boolean isDeleted);
 
+    Optional<UserProfile> findByAuthorUuid(String authorUuid);
 
 //    Optional<EditUserProfile> findByFamilyNameAndGivenNameAndUsername(String firstname, String lastname, String username);
 }

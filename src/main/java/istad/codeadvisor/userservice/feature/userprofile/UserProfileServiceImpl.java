@@ -29,7 +29,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final UserProfileMapper userProfileMapper;
     private final AchievementMapper achievementMapper;
     // create kafka topic
-    private static final String USER_TOPIC = "user-service-topic";
+    private static final String USER_TOPIC = "user-updated-event-topic";
     private final KafkaTemplate<String, UserProfile> kafkaTemplate;
 
     // create user
@@ -50,7 +50,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         achievementLevel.setIsDeleted(false);
         achievementLevel.setIsPublish(true);
         achievementLevelRepository.save(achievementLevel);
-        kafkaTemplate.send(USER_TOPIC, userProfile);
 //        achievementLevelRepository.save(achievementLevel);
 
         return userProfileMapper.toUserProfileResponse(userProfile);
@@ -84,8 +83,20 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "We dit not find this user."));
 
-        userProfileMapper.fromUserProfileUpdateRequest(userProfileUpdateRequest, userProfile);
+        userProfile.setProfileImage(userProfileUpdateRequest.profileImage());
+        userProfile.setFullName(userProfileUpdateRequest.fullName());
+        userProfile.setGender(userProfileUpdateRequest.gender());
+        userProfile.setBio(userProfileUpdateRequest.bio());
+        userProfile.setPhoneNumber(userProfileUpdateRequest.phoneNumber());
+        userProfile.setJobPosition(userProfileUpdateRequest.jobPosition());
+        userProfile.setSchool(userProfileUpdateRequest.school());
+        userProfile.setWorkPlace(userProfileUpdateRequest.workPlace());
+        userProfile.setDob(userProfileUpdateRequest.dob());
+        userProfile.setPob(userProfileUpdateRequest.pob());
+        userProfile.setCoverColor(userProfileUpdateRequest.coverColor());
+
         userProfileRepository.save(userProfile);
+        log.info("userProfile: {}", userProfile);
         kafkaTemplate.send(USER_TOPIC, userProfile);
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
@@ -97,7 +108,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "We dit not find this user."));
         userProfile.setIsDeleted(true);
-        kafkaTemplate.send(USER_TOPIC, userProfile);
         userProfileRepository.save(userProfile);
 
     }
@@ -110,7 +120,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                         "We dit not find this user."));
         userProfile.setIsDeleted(false);
 
-        kafkaTemplate.send(USER_TOPIC, userProfile);
         userProfileRepository.save(userProfile);
     }
 
@@ -125,7 +134,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                         "We dit not find this user."));
         achievementLevelRepository.delete(achievementLevel);
         userProfileRepository.delete(userProfile);
-        kafkaTemplate.send(USER_TOPIC, userProfile);
     }
 
     @Override
@@ -134,6 +142,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfile userProfile = new UserProfile();
         // Update the UserProfile details
         userProfile.setUsername(username);
+        userProfile.setAuthorUuid(uuid);
         userProfile.setEmail(email);
         userProfile.setFullName(fullName);
         userProfile.setProfileImage(profileImage);
@@ -149,6 +158,5 @@ public class UserProfileServiceImpl implements UserProfileService {
         // Save the updated AchievementLevel
         achievementLevelRepository.save(achievementLevel);
         // Send the updated UserProfile to Kafka
-        kafkaTemplate.send(USER_TOPIC, userProfile);
     }
 }

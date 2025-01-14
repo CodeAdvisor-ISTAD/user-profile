@@ -33,6 +33,7 @@ public class UserProfileController {
     }
 
     // get user profile by me
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
     public UserProfileResponse getMe(@AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaimAsString("username");

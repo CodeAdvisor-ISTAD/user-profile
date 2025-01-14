@@ -7,6 +7,7 @@ import istad.codeadvisor.userservice.feature.userprofile.UserProfileRepository;
 import istad.codeadvisor.userservice.mapper.UserProfileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class FileUploadServiceImpl implements FileUploadService{
     private final UserProfileRepository userProfileRepository;
     private final UserProfileMapper userProfileMapper;
+    private static final String USER_TOPIC = "user-updated-event-topic";
+    private final KafkaTemplate<String, UserProfile> kafkaTemplate;
+
 
 //    @Override
 //    public ProfileImageResponse uploadProfileImage(String imageUrl, String username) {
@@ -63,6 +67,8 @@ public class FileUploadServiceImpl implements FileUploadService{
 
         userProfile.setProfileImage(imageUrl); // Set the image URL
         userProfileRepository.save(userProfile);
+
+        kafkaTemplate.send(USER_TOPIC, userProfile); // Send the updated user profile to the Kafka topic
 
         return new ProfileImageResponse(imageUrl, username);
     }
