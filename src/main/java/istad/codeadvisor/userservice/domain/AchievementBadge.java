@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Document(collection = "achievement_badges")
 public class AchievementBadge {
     @Id
-    private ObjectId id;
+    private String id;
     private String userId;
     private String badgeImage;
     private String badgeName;

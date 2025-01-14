@@ -18,7 +18,7 @@ public record UserProfileResponse (
         String profileImage,
         String dob,
         String pob,
-        String coverColor,
-        AchievementLevelResponse achievementLevel
+        String coverColor
+//        AchievementLevelResponse achievementLevel
 ) {
 }
