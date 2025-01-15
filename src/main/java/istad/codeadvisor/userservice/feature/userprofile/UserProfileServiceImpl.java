@@ -83,7 +83,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "We dit not find this user."));
 
-        userProfile.setProfileImage(userProfileUpdateRequest.profileImage());
         userProfile.setFullName(userProfileUpdateRequest.fullName());
         userProfile.setGender(userProfileUpdateRequest.gender());
         userProfile.setBio(userProfileUpdateRequest.bio());
