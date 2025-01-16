@@ -1,8 +1,5 @@
 package istad.codeadvisor.userservice.feature.userprofile.dto;
 
-import istad.codeadvisor.userservice.domain.AchievementLevel;
-import istad.codeadvisor.userservice.feature.achievementLevel.dto.AchievementLevelResponse;
-
 public record UserProfileResponse (
         String id,
 //        String familyName,
@@ -10,6 +7,7 @@ public record UserProfileResponse (
         String fullName,
         String authorUuid,
         String username,
+        String email,
         String gender,
         String bio,
         String phoneNumber,

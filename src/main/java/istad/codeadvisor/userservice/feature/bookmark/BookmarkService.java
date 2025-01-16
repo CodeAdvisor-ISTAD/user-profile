@@ -10,7 +10,7 @@ public interface BookmarkService {
     BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest);
 
     // get all bookmarks for a user
-    List<BookmarkResponse> getBookmarks(String userId);
+    List<BookmarkResponse> getBookmarks(String authorUuid);
     // remove forum or content from bookmark
     void removeBookmark(String id);
 

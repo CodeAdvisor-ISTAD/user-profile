@@ -23,7 +23,7 @@ public record UserProfileUpdateRequest (
         String jobPosition,
         String school,
         String workPlace,
-        String profileImage,
+//        String profileImage,
         String dob,
         String pob,
         String coverColor

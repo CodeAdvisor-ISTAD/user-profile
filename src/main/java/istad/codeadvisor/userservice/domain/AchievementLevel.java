@@ -1,6 +1,5 @@
 package istad.codeadvisor.userservice.domain;
 
-import istad.codeadvisor.userservice.additional.UserData;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -15,7 +14,6 @@ public class AchievementLevel {
     private String id;
     private String userId;
     private String username;
-    private UserData userData;
     private String currentLevel; // E.g., "Contributor"
     @Builder.Default
     private Integer share_content_total = 0;

@@ -14,6 +14,7 @@ public record AchievementLevelResponse(
         Integer interaction_total,
 //        LocalDateTime isPublish,
         Boolean isDeleted,
+        Boolean isPublish,
         Integer totalPoints
 
 
