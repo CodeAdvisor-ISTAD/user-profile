@@ -5,6 +5,7 @@ import istad.codeadvisor.userservice.feature.fileupload.dto.ProfileImageResponse
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileCreateRequest;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileResponse;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileUpdateRequest;
+import org.apache.catalina.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -19,7 +20,8 @@ public interface UserProfileMapper {
     // get all user
     List<UserProfileResponse> toUserProfileResponseList(List<UserProfile> userProfiles);
     // update user
-    void fromUserProfileUpdateRequest(UserProfileUpdateRequest userProfileUpdateRequest, @MappingTarget UserProfile userProfile);
+
+//    UserProfileResponse fromUserProfileUpdateRequest(UserProfileUpdateRequest userProfileUpdateRequest, @MappingTarget UserProfile userProfile);
     // update profile images
     // response profile images
     ProfileImageResponse toProfileImageResponse(UserProfile userProfile);

@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,7 +82,17 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfile userProfile = userProfileRepository.findByUsername(username)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "We dit not find this user."));
-        userProfileMapper.fromUserProfileUpdateRequest(userProfileUpdateRequest, userProfile);
+
+        userProfile.setFullName(userProfileUpdateRequest.fullName());
+        userProfile.setGender(userProfileUpdateRequest.gender());
+        userProfile.setBio(userProfileUpdateRequest.bio());
+        userProfile.setPhoneNumber(userProfileUpdateRequest.phoneNumber());
+        userProfile.setJobPosition(userProfileUpdateRequest.jobPosition());
+        userProfile.setSchool(userProfileUpdateRequest.school());
+        userProfile.setWorkPlace(userProfileUpdateRequest.workPlace());
+        userProfile.setDob(userProfileUpdateRequest.dob());
+        userProfile.setPob(userProfileUpdateRequest.pob());
+        userProfile.setCoverColor(userProfileUpdateRequest.coverColor());
 
         userProfileRepository.save(userProfile);
         log.info("userProfile: {}", userProfile);

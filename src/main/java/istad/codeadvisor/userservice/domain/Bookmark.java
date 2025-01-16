@@ -1,5 +1,6 @@
 package istad.codeadvisor.userservice.domain;
 
+import istad.codeadvisor.userservice.additional.UserData;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -13,14 +14,12 @@ import java.time.LocalDateTime;
 public class Bookmark {
     @Id
     private String id; // Unique identifier for the bookmark
-    private String userId; // Reference to the UserProfile service
-    private String authorUuid; // Reference to the author of the content
+    private String authorUuid; // Reference to the UserProfile service
     @Builder.Default
-    private String forumId = null;
+    private String forumUuid = null;
     @Builder.Default
-    private String contentId = null; // Unique identifier for the content
-    private LocalDateTime bookmarkedAt; // Timestamp when the content was bookmarked
-    private Boolean isDeleted;
-
-
+    private String contentUuid = null; // Unique identifier for the content
+    private LocalDateTime createdAt; // Timestamp when the content was bookmarked
+    @Builder.Default
+    private Boolean isDeleted = false; // Flag to mark the bookmark as deleted
 }

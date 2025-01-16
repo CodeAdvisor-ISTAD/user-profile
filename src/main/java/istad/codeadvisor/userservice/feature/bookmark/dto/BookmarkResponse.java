@@ -1,13 +1,14 @@
 package istad.codeadvisor.userservice.feature.bookmark.dto;
 
+import istad.codeadvisor.userservice.additional.UserData;
+
 public record BookmarkResponse(
         String id,
-        String userId,
         String authorUuid,
-        String forumId,
-        String contentId,
+        String forumUuid,
+        String contentUuid,
         boolean isDeleted,
-        String bookmarkedAt
+        String createdAt
 
         ) {
 }
