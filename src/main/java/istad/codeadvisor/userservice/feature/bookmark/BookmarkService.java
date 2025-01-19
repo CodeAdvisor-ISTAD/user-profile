@@ -15,5 +15,8 @@ public interface BookmarkService {
     // remove forum or content from bookmark
     void removeBookmark(String id);
 
+    Boolean isForumBookmarked(String authorUuid, String forumSlug);
+
+
 
 }
