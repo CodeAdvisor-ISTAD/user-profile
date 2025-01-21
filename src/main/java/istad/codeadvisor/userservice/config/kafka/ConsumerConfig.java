@@ -46,11 +46,11 @@ public class ConsumerConfig implements BaseProducer {
         }
     }
 
-    // Forum consumer
-    @KafkaListener(topics = "content-topic-answers", groupId = "user-service")
+    // create content consumer
+    @KafkaListener(topics = "content-created-events-topic", groupId = "content-service")
     public void handleForumAnswers(ContentProducer contentProducer) {
         try {
-            achievementLevelServiceImpl.updateContentProducer(
+            achievementLevelServiceImpl.createContentProducer(
                     contentProducer.getId(),
                     contentProducer.getTitle(),
                     contentProducer.getAuthorUuid(),

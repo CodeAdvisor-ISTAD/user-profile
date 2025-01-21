@@ -34,7 +34,7 @@ public interface AchievementLevelService {
     void createForumProducer(String uuid, String authorUuid, String slug,  String description);
     void answerForumProducer(String questionOwnerUuid, String answerOwnerUuid, String description, String forumSlug);
 //    // handle the update from the content service
-    void updateContentProducer(
+    void createContentProducer(
             String id,
             String title,
             String authorUuid,

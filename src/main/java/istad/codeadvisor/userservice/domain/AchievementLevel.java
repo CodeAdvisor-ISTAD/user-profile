@@ -13,6 +13,7 @@ public class AchievementLevel {
     @Id
     private String id;
     private String userId;
+    private String authorUuid;
     private String username;
     private String currentLevel; // E.g., "Contributor"
     @Builder.Default

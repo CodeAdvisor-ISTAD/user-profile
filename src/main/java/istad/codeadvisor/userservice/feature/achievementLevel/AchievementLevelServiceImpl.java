@@ -95,7 +95,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
 
     // Update the user's achievement level based on the content service data
     @Override
-    public void updateContentProducer(
+    public void createContentProducer(
             String id,
             String title,
             String authorUuid,
@@ -104,7 +104,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
 //            String thumbnail,
             String keyword) {
         // Retrieve the user's achievement data from the repository
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(authorUuid)
+        AchievementLevel achievement = achievementLevelRepository.findByAuthorUuid(authorUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
         achievement.setShare_content_total(achievement.getShare_content_total() + 1);
         // Save the updated achievement data to the repository

@@ -1,6 +1,5 @@
 package istad.codeadvisor.userservice.domain;
 
-import istad.codeadvisor.userservice.additional.UserData;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
