@@ -5,6 +5,7 @@ import istad.codeadvisor.userservice.feature.readingHistory.dto.ReadingHistoryCr
 import istad.codeadvisor.userservice.feature.readingHistory.dto.ReadingHistoryResponse;
 import istad.codeadvisor.userservice.mapper.HistoryMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,24 +15,34 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReadingHistoryServiceImpl implements ReadingHistoryService {
     private final ReadingHistoryRepository readingHistoryRepository;
     private final HistoryMapper historyMapper;
 
     // post a reading history
     @Override
-    public ReadingHistoryResponse createHistory(ReadingHistoryCreateRequest historyCreateRequest) {
-        // Check if a history record already exists and delete it if present
-        Optional<ReadingHistory> existingHistory = readingHistoryRepository.findByUserIdAndContentIdAndQuestionId(
-                historyCreateRequest.userId(),
-                historyCreateRequest.contentId(),
-                historyCreateRequest.questionId());
-        existingHistory.ifPresent(readingHistoryRepository::delete);
+    public ReadingHistoryResponse createHistory(ReadingHistoryCreateRequest historyCreateRequest, String authorUuid) {
+        // Check if a history record already exists for the forum or content slug
+        ReadingHistory existingHistory = readingHistoryRepository.findByForumSlugOrContentSlug(
+                historyCreateRequest.forumSlug(),
+                historyCreateRequest.contentSlug()
+        );
 
-        // Create and save the new history
+        log.info("Existing history: {}", existingHistory);
+
+        // If a history record exists, update its createdAt time
+        if (existingHistory != null) {
+            existingHistory.setCreatedAt(LocalDateTime.now()); // Update the createdAt time
+            readingHistoryRepository.save(existingHistory); // Save the updated entity
+            return historyMapper.toReadingHistory(existingHistory); // Return the updated history
+        }
+
+        // If no history record exists, create a new one
         ReadingHistory readingHistory = historyMapper.fromReadingHistoryResponse(historyCreateRequest);
         readingHistory.setId(UUID.randomUUID().toString());
-        readingHistory.setReadAt(LocalDateTime.now());
+        readingHistory.setAuthorUuid(authorUuid);
+        readingHistory.setCreatedAt(LocalDateTime.now());
         readingHistoryRepository.save(readingHistory);
 
         // Return the newly created history as a response

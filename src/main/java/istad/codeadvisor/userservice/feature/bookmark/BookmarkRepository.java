@@ -12,9 +12,16 @@ import java.util.Optional;
 
 public interface BookmarkRepository extends MongoRepository<Bookmark, String> {
 
-    Bookmark findByAuthorUuid(String authorUuid);
+    Boolean existsByAuthorUuidAndForumSlugAndIsBookmarkedTrueAndIsDeletedFalse(String authorUuid, String forumSlug);
 
     List<Bookmark> findAllByAuthorUuidAndIsDeletedFalse(String authorUuid);
 
     Page<Bookmark> findAllByAuthorUuidAndIsDeletedFalse(String authorUuid, @NotNull Pageable pageable);
+
+    Bookmark findByForumSlug(String forumSlug);
+
+    Bookmark findByForumSlugAndAuthorUuid(String forumSlug, String authorUuid);
+
+    Bookmark findByContentSlugAndAuthorUuid(String contentSlug, String authorUuid);
+
 }

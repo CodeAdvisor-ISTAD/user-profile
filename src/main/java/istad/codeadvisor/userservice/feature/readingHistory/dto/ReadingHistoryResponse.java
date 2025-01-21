@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 
 public record ReadingHistoryResponse(
         String id,
-        String userId,
-        Integer questionId,
-        Integer contentId,
-        LocalDateTime readAt
+        String authorUuid,
+        String forumSlug,
+        String contentSlug,
+        LocalDateTime createdAt
 ) {
 }

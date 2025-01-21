@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReadingHistoryService {
     // post a reading history
-    ReadingHistoryResponse createHistory(ReadingHistoryCreateRequest historyCreateRequest);
+    ReadingHistoryResponse createHistory(ReadingHistoryCreateRequest historyCreateRequest, String authorUuid);
     // retrieve all reading histories of a user
     List<ReadingHistoryResponse> getReadingHistories();
 

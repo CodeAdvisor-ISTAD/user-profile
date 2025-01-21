@@ -1,5 +1,6 @@
 package istad.codeadvisor.userservice.feature.bookmark;
 
+import istad.codeadvisor.userservice.domain.Bookmark;
 import istad.codeadvisor.userservice.feature.bookmark.dto.BookmarkAddRequest;
 import istad.codeadvisor.userservice.feature.bookmark.dto.BookmarkResponse;
 import org.springframework.data.domain.Page;
@@ -12,11 +13,8 @@ public interface BookmarkService {
 
     // get all bookmarks for a user
     Page<BookmarkResponse> findAllBookmark(String authorUuid, int page, int size);
-    // remove forum or content from bookmark
-    void removeBookmark(String id);
 
-    Boolean isForumBookmarked(String authorUuid, String forumSlug);
+    BookmarkResponse unBookmarkForum(String forumSlug, String authorUuid);
 
-
-
+    Boolean checkBookmarkStatus(String forumSlug, String authorUuid);
 }

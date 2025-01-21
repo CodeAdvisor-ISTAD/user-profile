@@ -1,4 +1,4 @@
-package com.example.forumcodeadvisors.base;
+package istad.codeadvisor.userservice.base;
 
 import lombok.*;
 

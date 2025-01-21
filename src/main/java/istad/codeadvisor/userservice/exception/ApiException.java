@@ -1,6 +1,6 @@
-package com.example.forumcodeadvisors.exception;
+package istad.codeadvisor.userservice.exception;
 
-import com.example.forumcodeadvisors.base.ErrorResponse;
+import istad.codeadvisor.userservice.base.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

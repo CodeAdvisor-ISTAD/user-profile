@@ -1,7 +1,6 @@
-package com.example.forumcodeadvisors.base;
+package istad.codeadvisor.userservice.base;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
