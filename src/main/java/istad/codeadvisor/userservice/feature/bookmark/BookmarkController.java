@@ -34,6 +34,14 @@ public class BookmarkController {
         String authorUuid = jwt.getClaimAsString("userUuid");
         return bookmarkService.findAllBookmark(authorUuid, page, size);
     }
+
+    @GetMapping("/check-bookmark")
+    boolean checkBookmark(@RequestParam String forumSlug,
+                          @AuthenticationPrincipal Jwt jwt) {
+        String authorUuid = jwt.getClaimAsString("userUuid");
+        return bookmarkService.isForumBookmarked(authorUuid,forumSlug);
+    }
+
     // remove forum or content from bookmark
     @DeleteMapping("/{id}")
     void removeBookmark(@PathVariable String id) {

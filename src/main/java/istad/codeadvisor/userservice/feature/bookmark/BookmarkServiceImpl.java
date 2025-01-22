@@ -32,11 +32,9 @@ public class BookmarkServiceImpl implements BookmarkService {
         List<Bookmark> bookmarks = bookmarkRepository.findAllByAuthorUuidAndIsDeletedFalse(authorUuid);
 
         bookmarks.forEach(bookmark -> {
-            if(bookmark.getForumUuid().equals(bookmarkAddRequest.forumUuid()) || bookmark.getContentUuid().equals(bookmarkAddRequest.contentUuid())) {
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Already bookmarked this forum or content !"
-                );
+            if(bookmark.getForumSlug().equals(bookmarkAddRequest.forumSlug()) || bookmark.getContentSlug().equals(bookmarkAddRequest.contentSlug())) {
+                bookmark.setIsBookmarked(false);
+                bookmarkRepository.save(bookmark);
             }
         });
 
@@ -45,6 +43,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         newBookmark.setAuthorUuid(authorUuid);
         newBookmark.setCreatedAt(LocalDateTime.now());
         newBookmark.setIsDeleted(false); // New bookmarks are active
+        newBookmark.setIsBookmarked(true); // New bookmarks are bookmarked
         bookmarkRepository.save(newBookmark);
         return bookmarkMapper.toBookmark(newBookmark); // Return the newly created bookmark
     }
@@ -57,8 +56,6 @@ public class BookmarkServiceImpl implements BookmarkService {
 
         return bookmarks.map(bookmarkMapper::toBookmark);
     }
-
-
 
     // Get all bookmarks for a user
 //    @Override
@@ -78,6 +75,20 @@ public class BookmarkServiceImpl implements BookmarkService {
                         "Do not have (forum/content) in bookmark !"));
         bookmark.setIsDeleted(true);
         bookmarkRepository.save(bookmark);
+    }
+
+    @Override
+    public Boolean isForumBookmarked(String authorUuid, String forumSlug) {
+
+        Bookmark bookmark = bookmarkRepository.findByAuthorUuid(authorUuid);
+        if (bookmark == null) {
+            return false;
+        }
+
+        if(bookmark.getForumSlug().equals(forumSlug)) {
+            return true;
+        }
+        return false;
     }
 
 }

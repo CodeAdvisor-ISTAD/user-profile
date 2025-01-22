@@ -15,10 +15,12 @@ public class Bookmark {
     private String id; // Unique identifier for the bookmark
     private String authorUuid; // Reference to the UserProfile service
     @Builder.Default
-    private String forumUuid = null;
+    private String forumSlug = null;
     @Builder.Default
-    private String contentUuid = null; // Unique identifier for the content
+    private String contentSlug = null; // Unique identifier for the content
     private LocalDateTime createdAt; // Timestamp when the content was bookmarked
     @Builder.Default
     private Boolean isDeleted = false; // Flag to mark the bookmark as deleted
+    @Builder.Default
+    private Boolean isBookmarked = true; // Flag to mark the bookmark as bookmarked
 }

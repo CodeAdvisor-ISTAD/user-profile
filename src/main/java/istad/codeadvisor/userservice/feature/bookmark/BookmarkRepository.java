@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookmarkRepository extends MongoRepository<Bookmark, String> {
-    Bookmark findByForumUuid(String forumUuid);
-
-    Bookmark findByContentUuid(String contentUuid);
 
     Bookmark findByAuthorUuid(String authorUuid);
 
