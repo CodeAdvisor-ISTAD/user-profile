@@ -1,9 +1,12 @@
 package istad.codeadvisor.userservice.feature.readingHistory.dto;
 
+import org.springframework.lang.Nullable;
+
 public record ReadingHistoryCreateRequest (
-        String userId,
-        Integer contentId,
-        Integer questionId
+        @Nullable
+        String contentSlug,
+        @Nullable
+        String forumSlug
 
 ) {
 }

@@ -5,9 +5,10 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class BasedError<T> {
-    private String code;
-    private T description;
+@Builder
+public class BaseResponse<T> {
+    private Integer code;
+    private T message;
+
 }

@@ -11,10 +11,8 @@ import java.time.LocalDateTime;
 public class ReadingHistory {
     @Id
     private String id; // Primary key
-    private String userId;
-    private Integer questionId;
-    private Integer contentId; // Foreign key for content (can be mapped if needed)
-//    private Content content;
-    private LocalDateTime readAt;
-    private Boolean isDeleted;
+    private String authorUuid; // Reference to the UserProfile service
+    private String forumSlug;
+    private String contentSlug; // Foreign key for content (can be mapped if needed)
+    private LocalDateTime createdAt;
 }

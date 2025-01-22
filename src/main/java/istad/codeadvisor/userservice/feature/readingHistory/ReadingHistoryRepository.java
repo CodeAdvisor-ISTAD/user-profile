@@ -6,8 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface ReadingHistoryRepository extends MongoRepository<ReadingHistory, String> {
-    Boolean existsByUserIdAndContentIdAndQuestionId(String userId, Integer contentId, Integer questionId);
-    Optional<ReadingHistory> findByUserIdAndContentIdAndQuestionId(String userId, Integer contentId, Integer questionId);
-    Optional<ReadingHistory> findById(String id);
+    ReadingHistory findByForumSlug( String forumSlug);
 
+    ReadingHistory findByContentSlug( String contentSlug);
+
+    ReadingHistory findByForumSlugOrContentSlug( String forumSlug, String contentSlug);
 }

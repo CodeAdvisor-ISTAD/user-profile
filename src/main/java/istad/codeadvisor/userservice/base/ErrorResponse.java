@@ -5,8 +5,9 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class BasedResponse<T> {
-    private T payload;
+@Builder
+public class ErrorResponse<T> {
+    private Integer code;
+    private T reason;
 }
