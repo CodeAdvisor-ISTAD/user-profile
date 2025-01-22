@@ -1,6 +1,5 @@
 package istad.codeadvisor.userservice.feature.userprofile;
 
-import com.nimbusds.jwt.JWT;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileCreateRequest;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileResponse;
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileUpdateRequest;

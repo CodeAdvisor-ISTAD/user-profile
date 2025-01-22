@@ -74,7 +74,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     @Override
     public void createForumProducer(String authorUuid, String uuid , String slug, String description) {
         // Retrieve the user's achievement data from the repository
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(authorUuid)
+        AchievementLevel achievement = achievementLevelRepository.findByAuthorUuid(authorUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
 
         achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);

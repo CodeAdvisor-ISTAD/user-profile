@@ -22,7 +22,6 @@ public class BaseProducerDeserializer implements Deserializer<BaseProducer> {
             if (data == null || data.length == 0) {
                 return null; // Handle null payload gracefully
             }
-
             // Parse the JSON to determine the type
             JsonNode rootNode = objectMapper.readTree(data);
             if (rootNode.has("reactionType")) {

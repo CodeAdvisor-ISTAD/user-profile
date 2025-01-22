@@ -46,6 +46,23 @@ public class ConsumerConfig implements BaseProducer {
         }
     }
 
+    // create Question consumer
+    @KafkaListener(topics = "forum-created-events-topic", groupId = "question-service")
+    public void handleAskQuestion(AskQuestionProducer askQuestionProducer) {
+        try {
+            achievementLevelServiceImpl.createForumProducer(
+                    askQuestionProducer.getAuthorUuid(),
+                    askQuestionProducer.getUuid(),
+                    askQuestionProducer.getSlug(),
+
+                    askQuestionProducer.getDescription()
+            );
+            log.info("Successfully processed AskQuestionProducer message: {}", askQuestionProducer);
+        } catch (Exception e) {
+            log.error("Error processing AskQuestionProducer message: {}", askQuestionProducer, e);
+        }
+    }
+
     // create content consumer
     @KafkaListener(topics = "content-created-events-topic", groupId = "content-service")
     public void handleForumAnswers(ContentProducer contentProducer) {
