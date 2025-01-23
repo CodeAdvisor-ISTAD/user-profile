@@ -88,4 +88,10 @@ public class UserProfileController {
         userProfileService.deleteUserProfile(username);
     }
 
+    // get user profile
+    @GetMapping("/{uuid}/profile")
+    UserProfileResponse getUserProfile(@Valid @PathVariable String uuid) {
+        return userProfileService.findUserByUuid(uuid);
+    }
+
 }
