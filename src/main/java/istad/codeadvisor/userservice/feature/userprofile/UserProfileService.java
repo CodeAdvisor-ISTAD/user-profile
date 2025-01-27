@@ -28,4 +28,6 @@ public interface UserProfileService {
     // get user profile from identity service
     void updateUserProfileFromIdentity(String uuid, String username, String email, String fullName, String profileImage);
 
+    UserProfileResponse findUserByUuid(String uuid);
+
 }

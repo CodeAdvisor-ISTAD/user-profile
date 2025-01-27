@@ -158,4 +158,12 @@ public class UserProfileServiceImpl implements UserProfileService {
         achievementLevelRepository.save(achievementLevel);
         // Send the updated UserProfile to Kafka
     }
+
+    @Override
+    public UserProfileResponse findUserByUuid(String uuid) {
+        UserProfile userProfile = userProfileRepository.findByAuthorUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "We did not find this user."));
+        return userProfileMapper.toUserProfileResponse(userProfile);
+    }
 }
