@@ -134,12 +134,18 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     public String determineAchievementLevel(Integer totalPoints) {
         if (totalPoints >= 5000) {
             return "Verified Expert";
-        } else if (totalPoints >= 3500 && totalPoints < 4999) {
+        } else if (totalPoints >= 4000 && totalPoints < 4999) {
             return "Top Contributor";
-        } else if (totalPoints >= 100) {
+        } else if (totalPoints >= 3000 && totalPoints < 3999) {
+            return "Mentor";
+        } else if (totalPoints >= 2000 && totalPoints < 2999) {
+            return "Expert";
+        } else if (totalPoints >= 1000 && totalPoints < 1999) {
+            return "Senior";
+        } else if (totalPoints >= 200 && totalPoints < 999) {
             return "Contributor";
         } else {
-            return "Beginner";
+            return "Learner";
         }
     }
     // Get the user's achievement level by user ID

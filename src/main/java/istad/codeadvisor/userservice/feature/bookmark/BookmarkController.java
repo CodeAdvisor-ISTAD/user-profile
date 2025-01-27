@@ -38,7 +38,6 @@ public class BookmarkController {
         return bookmarkService.findAllBookmark(authorUuid, page, size);
     }
 
-
     @GetMapping("/unBookmark")
     BookmarkResponse unBookmarkForum(@RequestParam String forumSlug,
                                      @AuthenticationPrincipal Jwt jwt) {
