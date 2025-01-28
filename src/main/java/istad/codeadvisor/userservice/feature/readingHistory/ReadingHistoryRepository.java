@@ -11,4 +11,5 @@ public interface ReadingHistoryRepository extends MongoRepository<ReadingHistory
     ReadingHistory findByContentSlug( String contentSlug);
 
     ReadingHistory findByForumSlugOrContentSlug( String forumSlug, String contentSlug);
+    ReadingHistory findByForumSlugOrContentSlugAndAuthorUuid( String forumSlug, String contentSlug, String authorUuid);
 }

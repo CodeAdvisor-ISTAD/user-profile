@@ -18,21 +18,6 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     private final AchievementLevelRepository achievementLevelRepository;
     private final AchievementMapper achievementMapper;
 
-    // Update the user's achievement level based on the forum service data
-    @Override
-    public void updateFromForumService(String userId, Integer askQuestionTotal, Integer answerQuestionTotal) {
-        // Retrieve the user's achievement data from the repository
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
-
-        // Update the user's achievement data with the new forum service data
-        achievement.setAsk_question_total(achievement.getAsk_question_total() + 1);
-        achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);
-
-        // Save the updated achievement data to the repository
-        achievementLevelRepository.save(achievement);
-    }
-
     @Override
     public void updateFromReactionProducer(String contentId, String type, String userId, String reactionType) {
         // Retrieve the user's achievement data from the repository
@@ -85,7 +70,7 @@ public class AchievementLevelServiceImpl implements AchievementLevelService {
     @Override
     public void answerForumProducer(String questionOwnerUuid, String answerOwnerUuid, String description, String forumSlug) {
         // Retrieve the user's achievement data from the repository
-        AchievementLevel achievement = achievementLevelRepository.findByUserId(questionOwnerUuid)
+        AchievementLevel achievement = achievementLevelRepository.findByAuthorUuid(questionOwnerUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
 
         achievement.setAnswer_question_total(achievement.getAnswer_question_total() + 1);

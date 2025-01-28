@@ -17,7 +17,14 @@ public class ReadingHistoryController {
     private final ReadingHistoryService readingHistoryService;
 
     // post a reading history
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
+//    @PostMapping
+//    ReadingHistoryResponse createHistory(@RequestBody ReadingHistoryCreateRequest historyCreateRequest,
+//                                         @AuthenticationPrincipal Jwt jwt) {
+//        String authorUuid = jwt.getClaimAsString("userUuid");
+//        return readingHistoryService.createHistory(historyCreateRequest, authorUuid);
+//    }
+
     @PostMapping
     ReadingHistoryResponse createHistory(@RequestBody ReadingHistoryCreateRequest historyCreateRequest,
                                          @AuthenticationPrincipal Jwt jwt) {

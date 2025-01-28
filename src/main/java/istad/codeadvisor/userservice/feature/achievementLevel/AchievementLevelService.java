@@ -24,7 +24,6 @@ public interface AchievementLevelService {
     // handle the update from the content service
 //    void updateFromContentService(String userId, Integer shareContentTotal, Integer commentTotal, Integer likeTotal);
     // handle the update from the forum service
-    void updateFromForumService(String userId, Integer askQuestionTotal, Integer answerQuestionTotal);
     // handle the update from the reaction service
     void updateFromReactionProducer(String contentId, String type, String userId, String reactionType);
     // handle the update from the comment service

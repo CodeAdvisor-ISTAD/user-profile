@@ -23,29 +23,30 @@ public class ReadingHistoryServiceImpl implements ReadingHistoryService {
     // post a reading history
     @Override
     public ReadingHistoryResponse createHistory(ReadingHistoryCreateRequest historyCreateRequest, String authorUuid) {
-        // Check if a history record already exists for the forum or content slug
-        ReadingHistory existingHistory = readingHistoryRepository.findByForumSlugOrContentSlug(
+        // Check if this specific forum or content already exists in history
+        ReadingHistory existingHistory = readingHistoryRepository.findByForumSlugOrContentSlugAndAuthorUuid(
                 historyCreateRequest.forumSlug(),
-                historyCreateRequest.contentSlug()
+                historyCreateRequest.contentSlug(),
+                authorUuid
         );
 
         log.info("Existing history: {}", existingHistory);
 
-        // If a history record exists, update its createdAt time
+        // If this specific history exists, just update timestamp
         if (existingHistory != null) {
-            existingHistory.setCreatedAt(LocalDateTime.now()); // Update the createdAt time
-            readingHistoryRepository.save(existingHistory); // Save the updated entity
-            return historyMapper.toReadingHistory(existingHistory); // Return the updated history
+            existingHistory.setCreatedAt(LocalDateTime.now());
+            readingHistoryRepository.save(existingHistory);
+            return historyMapper.toReadingHistory(existingHistory);
         }
 
-        // If no history record exists, create a new one
+        // If it's a new forum/content, create new history entry
+        // (old entries remain in database)
         ReadingHistory readingHistory = historyMapper.fromReadingHistoryResponse(historyCreateRequest);
         readingHistory.setId(UUID.randomUUID().toString());
         readingHistory.setAuthorUuid(authorUuid);
         readingHistory.setCreatedAt(LocalDateTime.now());
         readingHistoryRepository.save(readingHistory);
 
-        // Return the newly created history as a response
         return historyMapper.toReadingHistory(readingHistory);
     }
 
