@@ -16,13 +16,13 @@ public class ConsumerConfig implements BaseProducer {
     private final UserProfileServiceImpl userProfileServiceImpl;
 
     // Community interaction consumer
-//    @KafkaListener(topics = "content-reacted-events-topic", groupId = "user-service")
+    @KafkaListener(topics = "content-reacted-events-topic", groupId = "user-service")
     public void handleCommunityInteraction(ReactionProducer reactionProducer) {
         try {
             achievementLevelServiceImpl.updateFromReactionProducer(
+                    reactionProducer.getUserId(),
                     reactionProducer.getContentId(),
                     reactionProducer.getType(),
-                    reactionProducer.getUserId(),
                     reactionProducer.getReactionType()
             );
             log.info("Successfully processed ReactionProducer message: {}", reactionProducer);
@@ -32,7 +32,7 @@ public class ConsumerConfig implements BaseProducer {
     }
 
     // Comment consumer
-//    @KafkaListener(topics = "comment-created-events-topic", groupId = "user-service")
+    @KafkaListener(topics = "comment-created-events-topic", groupId = "user-service")
     public void handleCommentEvents(CommentProducer commentProducer) {
         try {
             achievementLevelServiceImpl.updateCommentProducer(
