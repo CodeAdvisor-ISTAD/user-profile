@@ -5,9 +5,11 @@ import lombok.Data;
 
 @Data
 public class ReactionProducer implements BaseProducer {
+    private String userId;
     private String contentId;
     private String type;
-    private String userId;
     private String reactionType;
-    private String oldReactionType;
+    private String oldReactionType;// Add this field to match the payload
+    private String ownerId;
+    private String slug;
 }

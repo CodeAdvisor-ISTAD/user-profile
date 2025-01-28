@@ -6,6 +6,7 @@ import istad.codeadvisor.userservice.feature.readingHistory.dto.ReadingHistoryRe
 import istad.codeadvisor.userservice.mapper.HistoryMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -53,7 +54,8 @@ public class ReadingHistoryServiceImpl implements ReadingHistoryService {
     // retrieve all reading histories of a user
     @Override
     public List<ReadingHistoryResponse> getReadingHistories() {
-        List<ReadingHistory> readingHistoryResponses = readingHistoryRepository.findAll();
+        Sort sortByCreatedAtDesc = Sort.by(Sort.Direction.DESC, "createdAt");
+        List<ReadingHistory> readingHistoryResponses = readingHistoryRepository.findAll(sortByCreatedAtDesc);
         return historyMapper.toReadingHistoryResponseList(readingHistoryResponses);
     }
 
