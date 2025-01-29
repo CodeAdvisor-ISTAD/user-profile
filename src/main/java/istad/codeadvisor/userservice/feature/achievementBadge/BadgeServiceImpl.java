@@ -54,6 +54,18 @@ public class BadgeServiceImpl implements BadgeService{
         return badgeMapper.toAchievementBadgeResponse(achievementBadge);
     }
 
+    // get badge by user id
+    @Override
+    public BadgeResponse getBadgeByUserId(String userId) {
+        AchievementBadge achievementBadge = badgeRepository.findByUserId(userId)
+                .filter(badge -> !badge.getIsDeleted().equals(true))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "We did not find this badge."));
+        return badgeMapper.toAchievementBadgeResponse(achievementBadge);
+    }
+
+
+
     // update badge
     @Override
     public BadgeResponse updateBadgeByName(String badgeName, BadgeUpdateRequest badgeUpdateRequest) {

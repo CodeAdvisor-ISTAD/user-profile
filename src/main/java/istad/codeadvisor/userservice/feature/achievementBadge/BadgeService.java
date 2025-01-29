@@ -14,6 +14,8 @@ public interface BadgeService {
     List<AchievementBadge> getAllBadges();
     // get badge
     BadgeResponse getBadgeByName(String badgeName);
+    // get badge by user id
+    BadgeResponse getBadgeByUserId(String userId);
     // update badge
     BadgeResponse updateBadgeByName(String badgeName, BadgeUpdateRequest badgeUpdateRequest);
     // is public

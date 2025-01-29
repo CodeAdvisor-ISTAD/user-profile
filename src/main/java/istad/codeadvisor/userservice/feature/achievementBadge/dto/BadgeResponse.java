@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import java.time.LocalDateTime;
 
 public record BadgeResponse(
-        String id,
+        String id,  
         String userId,
         String badgeName,
         String badgeImage,

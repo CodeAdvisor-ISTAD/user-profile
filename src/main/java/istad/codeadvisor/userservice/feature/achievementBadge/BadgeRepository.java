@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface BadgeRepository extends MongoRepository<AchievementBadge, String> {
     Boolean existsByBadgeName(String badgeName);
     Optional<AchievementBadge> findByBadgeName(String badgeName);
+    Optional<AchievementBadge> findByUserId(String userId);
     Optional<AchievementBadge> findByBadgeNameAndIsPublish(String badgeName, Boolean isPublish);
 }
