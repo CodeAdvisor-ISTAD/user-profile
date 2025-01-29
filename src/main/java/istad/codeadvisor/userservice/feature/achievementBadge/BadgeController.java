@@ -32,6 +32,11 @@ public class BadgeController {
     BadgeResponse getBadge(@Valid @PathVariable String badgeName) {
         return badgeService.getBadgeByName(badgeName);
     }
+    // get badge by user id
+    @GetMapping("user/{userId}")
+    BadgeResponse getBadgeByUserId(@Valid @PathVariable String userId) {
+        return badgeService.getBadgeByUserId(userId);
+    }
     // update badge
     @PatchMapping("/{badgeName}")
     BadgeResponse updateBadge(@Valid @PathVariable String badgeName, @RequestBody BadgeUpdateRequest badgeUpdateRequest) {
