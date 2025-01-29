@@ -8,6 +8,7 @@ import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileResponse
 import istad.codeadvisor.userservice.feature.userprofile.dto.UserProfileUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user_profiles")
@@ -33,7 +35,7 @@ public class UserProfileController {
     }
 
     // get user profile by me
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
     public UserProfileResponse getMe(@AuthenticationPrincipal Jwt jwt) {
         String username = jwt.getClaimAsString("username");
@@ -62,9 +64,10 @@ public class UserProfileController {
     }
 
     // update user profile
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @PatchMapping()
     UserProfileResponse updateUserProfile( @Valid @RequestBody UserProfileUpdateRequest userProfileUpdateRequest, @AuthenticationPrincipal Jwt jwt) {
+        log.info("jwt in update profile : {}", jwt);
         return userProfileService.updateUserProfile(userProfileUpdateRequest, jwt);
     }
 

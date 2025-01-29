@@ -33,7 +33,7 @@ public class ReadingHistoryController {
     }
 
     // retrieve all reading histories of a user
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping
     List<ReadingHistoryResponse> getReadingHistories() {
         return readingHistoryService.getReadingHistories();

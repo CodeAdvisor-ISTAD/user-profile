@@ -20,7 +20,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     // add forum or content to bookmark
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     BookmarkResponse createForumBookmark(@RequestBody BookmarkAddRequest bookmarkAddRequest,
