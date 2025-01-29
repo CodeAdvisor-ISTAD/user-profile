@@ -166,4 +166,9 @@ public class UserProfileServiceImpl implements UserProfileService {
                         "We did not find this user."));
         return userProfileMapper.toUserProfileResponse(userProfile);
     }
+
+    @Override
+    public Long countAllUser() {
+        return userProfileRepository.count();
+    }
 }

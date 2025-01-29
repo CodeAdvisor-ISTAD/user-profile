@@ -94,4 +94,10 @@ public class UserProfileController {
         return userProfileService.findUserByUuid(uuid);
     }
 
+    // get user profile by username
+    @GetMapping("/total-users")
+    public long getTotalUsers() {
+        return userProfileService.countAllUser();
+    }
+
 }
