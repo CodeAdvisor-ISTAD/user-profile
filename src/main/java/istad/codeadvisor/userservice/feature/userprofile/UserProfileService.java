@@ -30,4 +30,6 @@ public interface UserProfileService {
 
     UserProfileResponse findUserByUuid(String uuid);
 
+    Long countAllUser();
+
 }
