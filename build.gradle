@@ -50,6 +50,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     // resource server
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    //actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 
 
