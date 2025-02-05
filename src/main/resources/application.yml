@@ -1,69 +1,13 @@
-server:
-  port: 8085
-
 spring:
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://127.0.0.1:9090
-  data:
-    mongodb:
-      uri: mongodb://202.178.125.77:5403/user-service
   profiles:
     active: dev
   config:
     import: "configserver:"
   cloud:
     config:
-      uri: http://167.172.78.79:8888
+      uri: http://202.178.125.77:9999
   application:
     name: user-service
-
-  kafka:
-    security:
-      protocol: SSL
-    ssl:
-        trust-store-location: classpath:kafka.server.truststore.jks
-        trust-store-password: password123
-        key-store-location: classpath:kafka.server.keystore.jks
-        key-store-password: password123
-        key-password: password123
-    producer:
-      bootstrap-servers:
-        - 167.172.78.79:29093
-        - 167.172.78.79:39093
-        - 167.172.78.79:49093
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      bootstrap-servers:
-        - 167.172.78.79:29093
-        - 167.172.78.79:39093
-        - 167.172.78.79:49093
-      group-id: user-service
-      auto-offset-reset: earliest
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      value-deserializer: istad.codeadvisor.userservice.config.kafka.BaseProducerDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: '*'
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-##        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.ContentProducer
-        spring.json.value.default.type: istad.codeadvisor.userservice.config.kafka.producer.BaseProducer
-#handle file size
-  servlet:
-    multipart:
-      max-request-size: 10MB
-      max-file-size: 5MB
-
-file-upload:
-  server-path: D://code-advisors//fileUpload//
-  base-uri: http://127.0.0.1:8168/
 logging:
   level:
     org.springframework.kafka.listener: DEBUG

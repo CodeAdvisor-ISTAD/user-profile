@@ -25,7 +25,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     // Add a forum or content to the bookmark
     @Override
     public BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest, String authorUuid) {
-        // Check if the forum is already bookmarked by the user
+        // Check if the forum or content is already bookmarked by the user
         Bookmark existingBookmark = bookmarkRepository.findByForumSlugAndAuthorUuid(
                 bookmarkAddRequest.forumSlug(),
                 authorUuid
@@ -36,25 +36,42 @@ public class BookmarkServiceImpl implements BookmarkService {
                 authorUuid
         );
 
-
-        if (existingBookmark != null) {
-            // Toggle the bookmark status
-            existingBookmark.setIsBookmarked(!existingBookmark.getIsBookmarked());
-            existingContentBookmark.setIsBookmarked(!existingContentBookmark.getIsBookmarked());
-        } else {
-            // Create a new bookmark
-            existingBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
-            existingBookmark.setAuthorUuid(authorUuid);
-            existingBookmark.setCreatedAt(LocalDateTime.now());
-            existingBookmark.setIsDeleted(false); // New bookmarks are active
-            existingBookmark.setIsBookmarked(true); // New bookmarks are bookmarked
+        // If the bookmark already exists and is active, do not allow adding it again
+        if (existingBookmark != null && existingBookmark.getIsBookmarked()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This forum is already bookmarked by the user.");
         }
 
-        // Save the updated or new bookmark
-        bookmarkRepository.save(existingBookmark);
+        if (existingContentBookmark != null && existingContentBookmark.getIsBookmarked()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This content is already bookmarked by the user.");
+        }
+
+        // If the bookmark exists but was removed (isBookmarked = false), toggle it back to true
+        if (existingBookmark != null) {
+            existingBookmark.setIsBookmarked(true);
+            existingBookmark.setIsDeleted(false); // Mark as active
+            bookmarkRepository.save(existingBookmark);
+            return bookmarkMapper.toBookmark(existingBookmark);
+        }
+
+        if (existingContentBookmark != null) {
+            existingContentBookmark.setIsBookmarked(true);
+            existingContentBookmark.setIsDeleted(false); // Mark as active
+            bookmarkRepository.save(existingContentBookmark);
+            return bookmarkMapper.toBookmark(existingContentBookmark);
+        }
+
+        // If no existing bookmark is found, create a new one
+        Bookmark newBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
+        newBookmark.setAuthorUuid(authorUuid);
+        newBookmark.setCreatedAt(LocalDateTime.now());
+        newBookmark.setIsDeleted(false); // New bookmarks are active
+        newBookmark.setIsBookmarked(true); // New bookmarks are bookmarked
+
+        // Save the new bookmark
+        bookmarkRepository.save(newBookmark);
 
         // Return the bookmark response
-        return bookmarkMapper.toBookmark(existingBookmark);
+        return bookmarkMapper.toBookmark(newBookmark);
     }
 
     @Override
