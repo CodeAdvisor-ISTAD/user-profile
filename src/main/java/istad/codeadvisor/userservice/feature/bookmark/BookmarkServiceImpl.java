@@ -23,56 +23,77 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final BookmarkMapper bookmarkMapper;
 
     // Add a forum or content to the bookmark
+//    @Override
+//    public BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest, String authorUuid) {
+//        // Handle forum bookmark if provided
+//        if (bookmarkAddRequest.forumSlug() != null) {
+//            Bookmark forumBookmark = bookmarkRepository.findByForumSlugAndAuthorUuid(bookmarkAddRequest.forumSlug(), authorUuid);
+//            if (forumBookmark != null) {
+//                if (forumBookmark.getIsBookmarked()) {
+//                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This forum is already bookmarked by the user.");
+//                }
+//                forumBookmark.setIsBookmarked(true);
+//                forumBookmark.setIsDeleted(false);
+//                bookmarkRepository.save(forumBookmark);
+//                return bookmarkMapper.toBookmark(forumBookmark);
+//            }
+//        }
+//
+//        // Handle content bookmark if provided
+//        if (bookmarkAddRequest.contentSlug() != null) {
+//            Bookmark contentBookmark = bookmarkRepository.findByContentSlugAndAuthorUuid(bookmarkAddRequest.contentSlug(), authorUuid);
+//            if (contentBookmark != null) {
+//                if (contentBookmark.getIsBookmarked()) {
+//                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This content is already bookmarked by the user.");
+//                }
+//                contentBookmark.setIsBookmarked(true);
+//                contentBookmark.setIsDeleted(false);
+//                bookmarkRepository.save(contentBookmark);
+//                return bookmarkMapper.toBookmark(contentBookmark);
+//            }
+//        }
+//
+//        // If no existing bookmark is found, create a new one
+//        Bookmark newBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
+//        newBookmark.setAuthorUuid(authorUuid);
+//        newBookmark.setCreatedAt(LocalDateTime.now());
+//        newBookmark.setIsDeleted(false);
+//        newBookmark.setIsBookmarked(true);
+//        bookmarkRepository.save(newBookmark);
+//        return bookmarkMapper.toBookmark(newBookmark);
+//    }
     @Override
     public BookmarkResponse addBookmark(BookmarkAddRequest bookmarkAddRequest, String authorUuid) {
-        // Check if the forum or content is already bookmarked by the user
-        Bookmark existingBookmark = bookmarkRepository.findByForumSlugAndAuthorUuid(
-                bookmarkAddRequest.forumSlug(),
-                authorUuid
-        );
-
-        Bookmark existingContentBookmark = bookmarkRepository.findByContentSlugAndAuthorUuid(
-                bookmarkAddRequest.contentSlug(),
-                authorUuid
-        );
-
-        // If the bookmark already exists and is active, do not allow adding it again
-        if (existingBookmark != null && existingBookmark.getIsBookmarked()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This forum is already bookmarked by the user.");
+        Bookmark bookmark = null;
+        if (bookmarkAddRequest.forumSlug() != null) {
+            bookmark = bookmarkRepository.findByForumSlugAndAuthorUuid(bookmarkAddRequest.forumSlug(), authorUuid);
+        } else if (bookmarkAddRequest.contentSlug() != null) {
+            bookmark = bookmarkRepository.findByContentSlugAndAuthorUuid(bookmarkAddRequest.contentSlug(), authorUuid);
         }
 
-        if (existingContentBookmark != null && existingContentBookmark.getIsBookmarked()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This content is already bookmarked by the user.");
+        if (bookmark != null) {
+            // Toggle the current bookmark state
+            boolean newStatus = !bookmark.getIsBookmarked();
+            bookmark.setIsBookmarked(newStatus);
+            bookmark.setIsDeleted(!newStatus); // Mark as deleted when unbookmarked, active when bookmarked
+            bookmarkRepository.save(bookmark);
+            return bookmarkMapper.toBookmark(bookmark);
+        } else if (bookmarkAddRequest.forumSlug() != null || bookmarkAddRequest.contentSlug() != null) {
+            // Create a new bookmark
+            Bookmark newBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
+            newBookmark.setAuthorUuid(authorUuid);
+            newBookmark.setCreatedAt(LocalDateTime.now());
+            newBookmark.setIsDeleted(false);   // Active bookmark
+            newBookmark.setIsBookmarked(true); // New bookmarks are active by default
+            bookmarkRepository.save(newBookmark);
+            return bookmarkMapper.toBookmark(newBookmark);
         }
 
-        // If the bookmark exists but was removed (isBookmarked = false), toggle it back to true
-        if (existingBookmark != null) {
-            existingBookmark.setIsBookmarked(true);
-            existingBookmark.setIsDeleted(false); // Mark as active
-            bookmarkRepository.save(existingBookmark);
-            return bookmarkMapper.toBookmark(existingBookmark);
-        }
-
-        if (existingContentBookmark != null) {
-            existingContentBookmark.setIsBookmarked(true);
-            existingContentBookmark.setIsDeleted(false); // Mark as active
-            bookmarkRepository.save(existingContentBookmark);
-            return bookmarkMapper.toBookmark(existingContentBookmark);
-        }
-
-        // If no existing bookmark is found, create a new one
-        Bookmark newBookmark = bookmarkMapper.fromBookmarkAddRequest(bookmarkAddRequest);
-        newBookmark.setAuthorUuid(authorUuid);
-        newBookmark.setCreatedAt(LocalDateTime.now());
-        newBookmark.setIsDeleted(false); // New bookmarks are active
-        newBookmark.setIsBookmarked(true); // New bookmarks are bookmarked
-
-        // Save the new bookmark
-        bookmarkRepository.save(newBookmark);
-
-        // Return the bookmark response
-        return bookmarkMapper.toBookmark(newBookmark);
+        // If neither forumSlug nor contentSlug is provided, throw an error.
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No valid slug provided.");
     }
+
+
 
     @Override
     public Page<BookmarkResponse> findAllBookmark(String authorUuid, int page, int size) {
